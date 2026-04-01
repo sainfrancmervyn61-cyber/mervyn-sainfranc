@@ -57,29 +57,6 @@ hobbies: [Jiu-jitsu brésilien, Gaming, Pâtisserie]
 
 ---
 
-## 📊 Statistiques GitHub
-
-<div align="center">
-
-<img height="180em" src="https://github-readme-stats.vercel.app/api?username=mervyn-sainfranc&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true&locale=fr"/>
-<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=mervyn-sainfranc&layout=compact&langs_count=8&theme=tokyonight"/>
-
-</div>
-
-<div align="center">
-
-[![GitHub Streak](https://streak-stats.demolab.com?user=mervyn-sainfranc&theme=tokyonight&locale=fr&date_format=j%20M%5B%20Y%5D)](https://git.io/streak-stats)
-
-</div>
-
----
-
-## 🏆 Trophées GitHub
-
-<div align="center">
-
-[![trophy](https://github-profile-trophy.vercel.app/?username=mervyn-sainfranc&theme=tokyonight&column=7&margin-w=10)](https://github.com/ryo-ma/github-profile-trophy)
-
 </div>
 
 ---
