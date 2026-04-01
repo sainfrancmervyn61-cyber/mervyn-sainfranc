@@ -59,8 +59,6 @@ hobbies: [Jiu-jitsu brésilien, Gaming, Pâtisserie]
 
 </div>
 
----
-
 ## 📁 Projets
 
 ### 🔧 [devops-lab](https://github.com/mervyn-sainfranc/devops-lab)
