@@ -54,7 +54,8 @@ hobbies: [Jiu-jitsu brésilien, Gaming, Pâtisserie]
 
 ### ☁️ Cloud
 ![AZURE](https://img.shields.io/badge/Azure-22E?style=for-the-badge&logo=amazonwebservices&logoColor=white)
-![AWS](https://img.shields.io/badge/AWS-FFCC00?style=for-the-badge&logo=amazonwebservices&logoColor=black)---
+![AWS](https://img.shields.io/badge/AWS-FFCC00?style=for-the-badge&logo=amazonwebservices&logoColor=black)
+---
 
 </div>
 
