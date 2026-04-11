@@ -90,17 +90,6 @@ Objectifs :
 | 🔒 Cybersécurité (Bachelor) | ■■□□ Intermédiaire | ■■■□ Confirmé |
 
 </div>
-
----
-
-## 📄 CV & Portfolio
-
-<div align="center">
-
-[![CV DevOps](https://img.shields.io/badge/📄_Télécharger_mon_CV-1B4FA8?style=for-the-badge&logoColor=white)](https://github.com/mervyn-sainfranc/mervyn-sainfranc/raw/main/CV-Mervyn-Sainfranc.pdf)
-
-</div>
-
 ---
 
 ## 💬 Citation du moment
