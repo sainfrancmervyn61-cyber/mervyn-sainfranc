@@ -55,32 +55,6 @@
       z-index: -1;
       pointer-events: none;
     }
-
-    /* Curseur personnalisé */
-    #cursor {
-      position: fixed;
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.1s, opacity 0.2s;
-      mix-blend-mode: difference;
-    }
-
-    #cursor-ring {
-      position: fixed;
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      opacity: 0.3;
-      transition: transform 0.2s, opacity 0.2s, width 0.2s, height 0.2s;
-    }
-
     /* Navigation */
     nav {
       position: fixed;
@@ -1257,7 +1231,7 @@
             <span class="cl-val">SAINFRANC.MERVYN61@GMAIL.COM</span>
           </div>
         </a>
-        <a href="https://linkedin.com/in/mervyn-sainfranc" class="contact-link" target="_blank">
+        <a href="https://www.linkedin.com/in/mervyn-sainfranc-45ab35279/" class="contact-link" target="_blank">
           <div class="cl-icon">💼</div>
           <div class="cl-text">
             <span class="cl-label">LINKEDIN</span>
@@ -1280,34 +1254,6 @@
     <p>© 2026 <span class="footer-dot">MERVYN SAINFRANC</span> — TECHNICIEN SYSTÈME & RÉSEAU · DEVOPS EN PROGRESSION</p>
     <p>HÉBERGÉ SUR <span class="footer-dot">GITHUB PAGES</span></p>
   </footer>
-
-  <script>
-    // Curseur personnalisé
-    const cursor = document.getElementById('cursor');
-    const cursorRing = document.getElementById('cursor-ring');
-    let mx = 0, my = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mx = e.clientX;
-      my = e.clientY;
-      cursor.style.left = mx - 4 + 'px';
-      cursor.style.top = my - 4 + 'px';
-      cursorRing.style.left = mx - 20 + 'px';
-      cursorRing.style.top = my - 20 + 'px';
-    });
-
-    document.querySelectorAll('a, button, .contact-link, .btn-primary, .btn-ghost').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursorRing.style.width = '50px';
-        cursorRing.style.height = '50px';
-        cursorRing.style.opacity = '0.5';
-      });
-      el.addEventListener('mouseleave', () => {
-        cursorRing.style.width = '40px';
-        cursorRing.style.height = '40px';
-        cursorRing.style.opacity = '0.3';
-      });
-    });
 
     // Effet de frappe
     const phrases = [
