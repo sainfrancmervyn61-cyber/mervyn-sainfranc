@@ -90,7 +90,6 @@ Objectifs :
 | 🔒 Cybersécurité (Bachelor) | ■■□□ Intermédiaire | ■■■□ Confirmé |
 
 </div>
----
 
 ## 💬 Citation du moment
 
