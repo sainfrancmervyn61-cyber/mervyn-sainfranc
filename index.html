@@ -1255,34 +1255,6 @@
     <p>HÉBERGÉ SUR <span class="footer-dot">GITHUB PAGES</span></p>
   </footer>
 
-  <script>
-    // Curseur personnalisé
-    const cursor = document.getElementById('cursor');
-    const cursorRing = document.getElementById('cursor-ring');
-    let mx = 0, my = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mx = e.clientX;
-      my = e.clientY;
-      cursor.style.left = mx - 4 + 'px';
-      cursor.style.top = my - 4 + 'px';
-      cursorRing.style.left = mx - 20 + 'px';
-      cursorRing.style.top = my - 20 + 'px';
-    });
-
-    document.querySelectorAll('a, button, .contact-link, .btn-primary, .btn-ghost').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursorRing.style.width = '50px';
-        cursorRing.style.height = '50px';
-        cursorRing.style.opacity = '0.5';
-      });
-      el.addEventListener('mouseleave', () => {
-        cursorRing.style.width = '40px';
-        cursorRing.style.height = '40px';
-        cursorRing.style.opacity = '0.3';
-      });
-    });
-
     // Effet de frappe
     const phrases = [
       'TECHNICIEN SYSTÈME & RÉSEAU',
