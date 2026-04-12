@@ -3,20 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mervyn Sainfranc | Glass DevOps</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <title>Mervyn Sainfranc | Neon DevOps</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Fira+Code&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #1a1a2e;
-      --glass: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.2);
-      --glass-hover: rgba(255, 255, 255, 0.12);
-      --purple: #8a2be2;
-      --blue: #4169e1;
-      --text: #f0f0f0;
-      --text2: #b0b0b0;
+      --bg: #0a0a1a;
+      --neon-pink: #ff2a6d;
+      --neon-blue: #05d9e8;
+      --neon-purple: #9c4fcf;
+      --text: #e0e0e0;
+      --text2: #a0a0a0;
       --mono: 'Fira Code', monospace;
-      --sans: 'Poppins', sans-serif;
+      --sans: 'Rajdhani', sans-serif;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html {
@@ -30,53 +28,53 @@
       content: "";
       position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
-      background: radial-gradient(circle at 10% 20%, rgba(138,43,226,0.05) 0%, transparent 50%),
-                  radial-gradient(circle at 90% 80%, rgba(65,105,225,0.05) 0%, transparent 50%);
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,42,109,0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(5,217,232,0.05) 0%, transparent 50%);
       pointer-events: none;
     }
-    /* Glass effect */
-    .glass {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(10px);
-      border-radius: 12px;
-      transition: all 0.3s;
+    /* Neon glow effect */
+    .neon {
+      text-shadow:
+        0 0 5px var(--neon-pink),
+        0 0 10px var(--neon-blue);
+      transition: text-shadow 0.3s;
     }
-    .glass:hover {
-      background: var(--glass-hover);
-      border-color: rgba(255,255,255,0.3);
+    .neon:hover {
+      text-shadow:
+        0 0 10px var(--neon-pink),
+        0 0 20px var(--neon-blue),
+        0 0 30px var(--neon-purple);
     }
     /* Navigation */
     nav {
       position: fixed; top: 1rem; left: 0; right: 0;
       z-index: 1000; display: flex;
-      justify-content: center; align-items: center;
-      padding: 0.8rem 2rem; border-radius: 50px;
-      background: var(--glass); border: 1px solid var(--glass-border);
-      backdrop-filter: blur(10px); max-width: 500px;
-      margin: 0 auto;
-    }
-    .nav-logo {
-      font-family: var(--mono); font-size: 1.1rem;
-      color: var(--purple); font-weight: 500;
-      margin-right: auto;
+      justify-content: center; padding: 0.8rem 2rem;
+      background: rgba(10,10,26,0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 50px; border: 1px solid rgba(5,217,232,0.2);
     }
     .nav-links {
-      display: flex; gap: 1.5rem; list-style: none;
-      margin: 0 1rem;
+      display: flex; gap: 2rem; list-style: none;
     }
     .nav-links a {
       color: var(--text2); text-decoration: none;
-      font-size: 0.9rem; transition: all 0.2s;
-      padding: 0.5rem 0; position: relative;
+      font-family: var(--mono); font-size: 0.9rem;
+      transition: all 0.2s; position: relative;
     }
-    .nav-links a:hover { color: var(--purple); }
+    .nav-links a:hover {
+      color: var(--neon-blue);
+      transform: translateY(-2px);
+    }
     .nav-links a::after {
-      content: ""; position: absolute; bottom: 0; left: 0;
-      width: 0; height: 1px; background: var(--purple);
+      content: ""; position: absolute; bottom: -5px; left: 0;
+      width: 0; height: 1px; background: var(--neon-pink);
       transition: width 0.3s;
     }
-    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
     /* Hero */
     #hero {
       min-height: 100vh; display: flex;
@@ -84,38 +82,18 @@
       padding: 0 2rem; text-align: center;
       position: relative;
     }
-    .hero-content {
-      max-width: 800px; position: relative; z-index: 2;
-    }
     .hero-name {
-      font-size: clamp(3rem, 8vw, 5rem);
+      font-size: clamp(3rem, 8vw, 6rem);
       font-weight: 700; margin-bottom: 1.5rem;
-      background: linear-gradient(90deg, var(--purple), var(--blue));
+      background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
       -webkit-background-clip: text; background-clip: text;
-      color: transparent;
+      color: transparent; text-align: center;
     }
     .hero-title {
       font-family: var(--mono); font-size: 1.2rem;
       color: var(--text2); margin-bottom: 2rem;
-    }
-    .hero-desc {
-      font-size: 1.1rem; line-height: 1.8;
-      color: var(--text2); margin-bottom: 2.5rem;
-      max-width: 600px; margin: 0 auto 2.5rem;
-    }
-    .hero-btns {
-      display: flex; gap: 1rem; justify-content: center;
-      flex-wrap: wrap;
-    }
-    .btn-primary {
-      padding: 0.8rem 1.8rem; background: var(--purple);
-      color: white; border: none; border-radius: 8px;
-      font-weight: 600; text-decoration: none;
-      transition: all 0.3s; box-shadow: 0 4px 15px rgba(138,43,226,0.2);
-    }
-    .btn-primary:hover {
-      background: var(--blue); transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(65,105,225,0.3);
+      border-bottom: 1px solid rgba(255,42,109,0.3);
+      padding-bottom: 1rem; display: inline-block;
     }
     /* Sections */
     section {
@@ -127,31 +105,19 @@
       margin-bottom: 3rem; color: var(--text);
     }
     /* Skills */
-    #skills {
-      display: flex; flex-wrap: wrap;
-      justify-content: center; gap: 2rem;
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem; max-width: 1200px; margin: 0 auto;
     }
     .skill-card {
-      width: 300px; height: 200px;
-      background: var(--glass); border: 1px solid var(--glass-border);
-      border-radius: 12px; padding: 1.5rem;
-      backdrop-filter: blur(10px);
+      background: rgba(10,10,26,0.5); border: 1px solid rgba(255,42,109,0.2);
+      border-radius: 12px; padding: 2rem;
       transition: all 0.3s;
     }
     .skill-card:hover {
+      border-color: var(--neon-blue);
       transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-    /* Experience */
-    .experience-timeline {
-      position: relative; max-width: 800px;
-      margin: 0 auto;
-    }
-    .experience-timeline::before {
-      content: ""; position: absolute; left: 50%;
-      top: 0; bottom: 0; width: 2px;
-      background: linear-gradient(to bottom, var(--purple), var(--blue));
-      transform: translateX(-50%);
+      box-shadow: 0 0 20px rgba(5,217,232,0.2);
     }
     /* Projects */
     .projects-grid {
@@ -159,37 +125,42 @@
       gap: 2rem; max-width: 1200px; margin: 0 auto;
     }
     .project-card {
-      background: var(--glass); border: 1px solid var(--glass-border);
-      border-radius: 12px; padding: 1.5rem;
-      backdrop-filter: blur(10px); transition: all 0.3s;
-      height: 100%;
+      background: rgba(10,10,26,0.5); border: 1px solid rgba(255,42,109,0.2);
+      border-radius: 12px; padding: 2rem;
+      transition: all 0.3s; position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: ""; position: absolute; top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--neon-pink), transparent);
+    }
+    .project-card:hover {
+      border-color: var(--neon-pink);
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(255,42,109,0.2);
     }
     /* Contact */
     #contact {
-      background: linear-gradient(135deg, rgba(138,43,226,0.1), rgba(65,105,225,0.1));
-    }
-    .contact-form {
-      max-width: 600px; margin: 0 auto;
-      background: var(--glass); padding: 2rem;
-      border-radius: 12px; border: 1px solid var(--glass-border);
+      background: linear-gradient(135deg, rgba(255,42,109,0.05), rgba(5,217,232,0.05));
     }
     /* Footer */
     footer {
       padding: 2rem; text-align: center;
+      border-top: 1px solid rgba(255,42,109,0.2);
       font-family: var(--mono); font-size: 0.9rem;
-      color: var(--text2); border-top: 1px solid var(--glass-border);
+      color: var(--text2);
     }
     /* Responsive */
     @media (max-width: 768px) {
       nav { max-width: 90%; }
       #hero { padding: 4rem 1rem; }
-      .projects-grid { grid-template-columns: 1fr; }
+      .skills-grid, .projects-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <nav class="glass">
-    <div class="nav-logo">mervyn.sainfranc()</div>
+  <nav>
     <ul class="nav-links">
       <li><a href="#skills">Compétences</a></li>
       <li><a href="#experience">Expérience</a></li>
@@ -199,67 +170,72 @@
   </nav>
 
   <section id="hero">
-    <div class="hero-content">
-      <h1 class="hero-name">Mervyn Sainfranc</h1>
-      <div class="hero-title">
-        <span id="typed-text"></span><span id="typed-cursor">|</span>
-      </div>
-      <p class="hero-desc">
-        Étudiant en <strong>DevOps & Cloud</strong> chez Sup de Vinci.
-        Alternant chez Wiconnect, je maîtrise l'automatisation d'infrastructures
-        et la virtualisation avec Proxmox, Docker et Ansible.
-      </p>
-      <div class="hero-btns">
-        <a href="#projects" class="btn-primary">Mes Projets</a>
-        <a href="#contact" class="btn-primary" style="background: var(--blue);">Me Contacter</a>
-      </div>
+    <h1 class="hero-name neon">Mervyn Sainfranc</h1>
+    <div class="hero-title">
+      <span id="typed-text"></span><span id="typed-cursor">|</span>
+    </div>
+    <p style="max-width: 600px; margin: 0 auto 2.5rem; color: var(--text2); line-height: 1.8;">
+      Étudiant en <strong>DevOps & Cloud</strong> chez Sup de Vinci.
+      Alternant chez Wiconnect, je maîtrise l'automatisation d'infrastructures
+      avec Proxmox, Docker et Ansible.
+    </p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="#projects" style="padding: 0.8rem 1.8rem; background: var(--neon-pink); color: white; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s;">Mes Projets</a>
+      <a href="#contact" style="padding: 0.8rem 1.8rem; background: var(--neon-blue); color: white; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s;">Me Contacter</a>
     </div>
   </section>
 
   <section id="skills">
-    <h2 class="section-title">Compétences Techniques</h2>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem;">
-      <div class="skill-card glass">
-        <h3 style="color: var(--purple); margin-bottom: 1rem;">🖥️ Système</h3>
+    <h2 class="section-title neon">Compétences Techniques</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3 style="color: var(--neon-pink); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>🖥️</span> Système & Virtualisation
+        </h3>
         <ul style="list-style: none;">
-          <li style="margin-bottom: 0.5rem;">✓ Windows Server (AD, GPO)</li>
-          <li style="margin-bottom: 0.5rem;">✓ Linux (Ubuntu/Debian)</li>
-          <li style="margin-bottom: 0.5rem;">✓ Proxmox VE</li>
+          <li style="margin-bottom: 0.8rem; display: flex; justify-content: space-between;">
+            <span>Windows Server</span>
+            <span style="color: var(--neon-blue); font-size: 0.9rem;">85%</span>
+          </li>
+          <!-- Autres compétences -->
         </ul>
       </div>
-      <!-- Autres cartes de compétences -->
+      <!-- Autres cartes -->
     </div>
   </section>
 
   <section id="experience">
-    <h2 class="section-title">Expérience Professionnelle</h2>
-    <div class="experience-timeline">
-      <div style="position: relative; width: 50%; padding: 2rem;">
-        <div class="glass" style="padding: 1.5rem; margin-left: 2rem;">
-          <h3 style="color: var(--purple);">Alternant DevOps</h3>
-          <p style="color: var(--blue); font-size: 0.9rem;">Wiconnect · Oct 2025 - Présent</p>
-          <ul style="margin-top: 1rem; color: var(--text2);">
-            <li>Automatisation avec Ansible</li>
-            <li>Gestion Proxmox</li>
-          </ul>
+    <h2 class="section-title neon">Expérience Professionnelle</h2>
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div style="position: relative; padding-left: 2rem; margin-bottom: 3rem;">
+        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--neon-pink), var(--neon-blue));"></div>
+        <div style="position: relative;">
+          <div style="background: rgba(10,10,26,0.5); border: 1px solid rgba(255,42,109,0.2); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; margin-left: 1rem;">
+            <h3 style="color: var(--neon-pink); margin-bottom: 0.5rem;">Alternant DevOps</h3>
+            <p style="color: var(--neon-blue); font-size: 0.9rem; margin-bottom: 1rem;">Wiconnect · Oct 2025 - Présent</p>
+            <ul style="color: var(--text2);">
+              <li>Automatisation avec Ansible</li>
+              <li>Gestion Proxmox</li>
+            </ul>
+          </div>
+          <!-- Autres expériences -->
         </div>
       </div>
-      <!-- Autres expériences -->
     </div>
   </section>
 
   <section id="projects">
-    <h2 class="section-title">Projets Réalisés</h2>
+    <h2 class="section-title neon">Projets Réalisés</h2>
     <div class="projects-grid">
-      <div class="project-card glass">
+      <div class="project-card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-          <h3>Laboratoire DevOps</h3>
-          <span style="background: var(--purple); color: white; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem;">EN COURS</span>
+          <h3 style="color: var(--neon-pink);">Laboratoire DevOps</h3>
+          <span style="background: var(--neon-blue); color: white; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem;">EN COURS</span>
         </div>
         <p style="color: var(--text2); margin-bottom: 1rem;">Environnement Docker + Ansible pour l'apprentissage du DevOps.</p>
         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-          <span style="background: var(--glass-border); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem;">Docker</span>
-          <span style="background: var(--glass-border); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem;">Ansible</span>
+          <span style="background: rgba(255,42,109,0.2); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(255,42,109,0.3);">Docker</span>
+          <span style="background: rgba(255,42,109,0.2); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(255,42,109,0.3);">Ansible</span>
         </div>
       </div>
       <!-- Autres projets -->
@@ -267,26 +243,25 @@
   </section>
 
   <section id="contact">
-    <h2 class="section-title">Contactez-moi</h2>
-    <div class="contact-form glass">
-      <form>
-        <div style="margin-bottom: 1rem;">
-          <label style="display: block; margin-bottom: 0.5rem; color: var(--text2);">Email</label>
-          <input type="email" style="width: 100%; padding: 0.8rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text);" placeholder="votre@email.com">
-        </div>
-        <!-- Autres champs -->
-        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">Envoyer</button>
-      </form>
-      <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
-        <a href="mailto:sainfranc.mervyn61@gmail.com" style="color: var(--text2); font-size: 1.2rem;">📧</a>
-        <a href="https://linkedin.com/in/mervyn-sainfranc" style="color: var(--text2); font-size: 1.2rem;" target="_blank">💼</a>
-        <a href="https://github.com/mervyn-sainfranc" style="color: var(--text2); font-size: 1.2rem;" target="_blank">🐙</a>
+    <h2 class="section-title neon">Contactez-moi</h2>
+    <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+      <p style="color: var(--text2); margin-bottom: 2rem; line-height: 1.8;">
+        Vous avez une question ou une opportunité ?<br>
+        N'hésitez pas à me contacter !
+      </p>
+      <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem;">
+        <a href="mailto:sainfranc.mervyn61@gmail.com" style="color: var(--neon-pink); font-size: 1.5rem; transition: all 0.3s;" class="neon">📧</a>
+        <a href="https://linkedin.com/in/mervyn-sainfranc" style="color: var(--neon-blue); font-size: 1.5rem; transition: all 0.3s;" class="neon" target="_blank">💼</a>
+        <a href="https://github.com/mervyn-sainfranc" style="color: var(--neon-purple); font-size: 1.5rem; transition: all 0.3s;" class="neon" target="_blank">🐙</a>
       </div>
+      <a href="CV-Mervyn-Sainfranc.pdf" download style="display: inline-block; padding: 0.8rem 1.8rem; background: var(--neon-pink); color: white; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s;" class="neon">
+        Télécharger mon CV
+      </a>
     </div>
   </section>
 
   <footer>
-    <p>© 2026 Mervyn Sainfranc | DevOps & Cloud Engineer</p>
+    <p>© 2026 <span style="color: var(--neon-pink);">Mervyn Sainfranc</span> — DevOps & Cloud Engineer</p>
   </footer>
 
   <script>
