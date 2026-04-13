@@ -86,6 +86,7 @@ Objectifs :
 | 🐳 Docker & Docker Compose | ■□□□ Débutant | ■■■□ Confirmé |
 | ⚙️ GitHub Actions CI/CD | ■□□□ Débutant | ■■■□ Confirmé |
 | 🏗️ Terraform | ■□□□ Débutant | ■■□□ Intermédiaire |
+| Ansible | ■□□□ Débutant | ■■□□ Intermédiaire |
 | ☸️ Kubernetes | ⬜ Pas encore | ■□□□ Débutant |
 | 🔒 Cybersécurité (Bachelor) | ■■□□ Intermédiaire | ■■■□ Confirmé |
 
