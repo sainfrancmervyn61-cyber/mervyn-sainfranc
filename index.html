@@ -3,288 +3,645 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mervyn Sainfranc | DevOps & Système/Réseau</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <title>Mervyn Sainfranc — DevOps & Système/Réseau</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f8f9fa;
+      --bg: #ffffff;
+      --bg-alt: #f8f9fa;
       --text: #212529;
-      --text2: #6c757d;
-      --primary: #4e73df;
-      --secondary: #858796;
-      --success: #28a745;
-      --mono: 'JetBrains Mono', monospace;
+      --text-light: #6c757d;
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: #e5e7eb;
+      --mono: 'Space Mono', monospace;
       --sans: 'Inter', sans-serif;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     html {
+      scroll-behavior: smooth;
       background: var(--bg);
       color: var(--text);
       font-family: var(--sans);
-      scroll-behavior: smooth;
     }
-    body { line-height: 1.6; }
+
+    body {
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
     /* Navigation */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 1000; padding: 1rem 2rem;
-      display: flex; justify-content: space-between;
-      align-items: center; background: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid var(--border);
     }
+
     .nav-logo {
-      font-family: var(--mono); font-size: 1rem;
-      color: var(--primary); font-weight: 600;
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      color: var(--primary);
+      font-weight: 600;
     }
+
     .nav-links {
-      display: flex; gap: 2rem; list-style: none;
+      display: flex;
+      gap: 2rem;
+      list-style: none;
     }
+
     .nav-links a {
-      color: var(--text2); text-decoration: none;
-      font-size: 0.9rem; transition: all 0.2s;
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+      position: relative;
     }
-    .nav-links a:hover { color: var(--primary); }
-    .btn-primary {
-      padding: 0.8rem 1.8rem; background: var(--primary);
-      color: white; border: none; border-radius: 6px;
-      text-decoration: none; font-weight: 500;
-      transition: all 0.3s;
+
+    .nav-links a:hover {
+      color: var(--primary);
     }
-    .btn-primary:hover {
-      background: #3a5cc1; transform: translateY(-2px);
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--primary);
+      transition: width 0.3s;
     }
-    /* Hero */
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Hero Section */
     #hero {
-      min-height: 100vh; display: flex;
-      align-items: center; padding: 0 5rem;
-      background: linear-gradient(135deg, rgba(78,115,223,0.05), transparent);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 5rem;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.03) 0%, rgba(37, 99, 235, 0) 50%);
     }
-    .hero-content { max-width: 800px; }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--primary);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      background: rgba(37, 99, 235, 0.05);
+    }
+
     .hero-name {
       font-size: clamp(3rem, 8vw, 5rem);
-      font-weight: 700; line-height: 1.1;
-      margin-bottom: 1.5rem; color: var(--text);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: var(--text);
     }
+
     .hero-title {
-      font-family: var(--mono); font-size: 1.1rem;
-      color: var(--text2); margin-bottom: 2rem;
-      border-bottom: 1px solid var(--secondary);
-      padding-bottom: 1rem; display: inline-block;
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      display: inline-block;
     }
+
     #typed-text {
       color: var(--primary);
-      font-family: var(--mono); font-size: 1.1rem;
+      font-family: var(--mono);
+      font-size: 1.1rem;
     }
+
     #typed-cursor {
-      display: inline-block; width: 2px; height: 1.1rem;
-      background: var(--primary); vertical-align: middle;
-      margin-left: 5px; animation: blink 1s infinite;
+      display: inline-block;
+      width: 2px;
+      height: 1.1rem;
+      background: var(--primary);
+      vertical-align: middle;
+      margin-left: 5px;
+      animation: blink 1s infinite;
     }
+
     @keyframes blink {
-      0%, 100% { opacity: 1; } 50% { opacity: 0; }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
+
     .hero-desc {
-      max-width: 600px; color: var(--text2);
-      font-size: 1.1rem; line-height: 1.8;
+      max-width: 600px;
+      color: var(--text-light);
+      font-size: 1.1rem;
+      line-height: 1.8;
       margin-bottom: 2.5rem;
     }
-    .hero-desc strong { color: var(--text); font-weight: 600; }
-    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-    /* Sections */
-    section { padding: 5rem 5rem; }
+
+    .hero-desc strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 0.8rem 1.8rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      padding: 0.8rem 1.8rem;
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(37, 99, 235, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Sections Générales */
+    section {
+      padding: 5rem 5rem;
+    }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--primary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-tag::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+    }
+
     .section-title {
       font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 600; text-align: center;
-      margin-bottom: 3rem; color: var(--text);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--text);
     }
-    /* Skills */
+
+    /* Compétences */
     .skills-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem; max-width: 1200px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
+
     .skill-card {
-      background: white; border-radius: 12px;
-      padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      transition: all 0.3s; border: 1px solid rgba(0,0,0,0.05);
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.3s;
     }
+
     .skill-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
     }
-    .skill-item { margin-bottom: 1rem; }
+
+    .skill-category-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-category-title h3 {
+      color: var(--primary);
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .skill-item {
+      margin-bottom: 1.2rem;
+    }
+
     .skill-name {
-      display: flex; justify-content: space-between;
-      margin-bottom: 0.5rem; font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
     }
+
+    .skill-level {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
     .skill-bar {
-      height: 4px; background: #e9ecef;
-      border-radius: 2px; overflow: hidden;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
     }
+
     .skill-bar-fill {
-      height: 100%; border-radius: 2px;
-      background: var(--success); transition: width 1.5s;
+      height: 100%;
+      border-radius: 2px;
+      background: var(--success);
+      transition: width 1.5s ease-out;
     }
-    /* Experience */
+
+    /* Expérience */
     .timeline {
-      position: relative; max-width: 800px;
-      margin: 0 auto; padding-left: 2rem;
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-left: 2rem;
     }
+
     .timeline::before {
-      content: ""; position: absolute; left: 0;
-      top: 0; bottom: 0; width: 1px;
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
       background: linear-gradient(to bottom, var(--primary), var(--success));
     }
+
     .tl-item {
-      position: relative; padding-left: 2rem;
+      position: relative;
+      padding-left: 2rem;
       margin-bottom: 3rem;
     }
+
     .tl-dot {
-      position: absolute; left: -0.5rem; top: 0;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: var(--primary); border: 2px solid white;
+      position: absolute;
+      left: -0.5rem;
+      top: 0;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 2px solid white;
     }
-    .tl-dot.active { background: var(--success); }
+
+    .tl-dot.active {
+      background: var(--success);
+    }
+
     .tl-date {
-      font-family: var(--mono); font-size: 0.9rem;
-      color: var(--text2); margin-bottom: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
     }
+
+    .tl-active {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      font-size: 0.7rem;
+      margin-left: 0.5rem;
+    }
+
     .tl-title {
-      font-size: 1.3rem; font-weight: 600;
-      color: var(--text); margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
     }
+
     .tl-company {
-      color: var(--primary); font-size: 1rem;
+      color: var(--primary);
+      font-size: 1rem;
       margin-bottom: 1rem;
     }
+
     .tl-tags {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
       margin-bottom: 1rem;
     }
+
     .tl-tag {
-      background: #e9ecef; padding: 0.3rem 0.6rem;
-      border-radius: 4px; font-size: 0.8rem;
-      color: var(--text2);
+      background: #f3f4f6;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      color: var(--text-light);
     }
-    .tl-bullets { list-style: none; }
+
+    .tl-bullets {
+      list-style: none;
+    }
+
     .tl-bullet {
-      margin-bottom: 0.5rem; color: var(--text2);
-      position: relative; padding-left: 1.5rem;
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.8rem;
+      color: var(--text-light);
     }
+
     .tl-bullet::before {
-      content: "▹"; position: absolute; left: 0;
+      content: '▹';
+      position: absolute;
+      left: 0;
       color: var(--primary);
     }
-    /* Projects */
+
+    /* Projets */
     .projects-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem; max-width: 1200px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
+
     .project-card {
-      background: white; border-radius: 12px;
-      padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      transition: all 0.3s; border: 1px solid rgba(0,0,0,0.05);
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.3s;
       height: 100%;
     }
+
     .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
     }
+
     .proj-status {
-      display: inline-block; padding: 0.3rem 0.6rem;
-      border-radius: 4px; font-size: 0.8rem;
+      display: inline-block;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
       margin-bottom: 1rem;
     }
-    .status-wip { background: rgba(78,115,223,0.1); color: var(--primary); }
+
+    .status-wip {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+    }
+
     .proj-icon {
-      width: 50px; height: 50px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem; font-size: 1.5rem;
-      background: rgba(78,115,223,0.1); color: var(--primary);
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
     }
+
     .proj-name {
-      font-size: 1.2rem; font-weight: 600;
-      color: var(--text); margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.8rem;
     }
+
     .proj-desc {
-      color: var(--text2); margin-bottom: 1rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
       line-height: 1.6;
     }
+
     .proj-tech {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
+
     .proj-tech span {
-      background: #e9ecef; padding: 0.3rem 0.6rem;
-      border-radius: 4px; font-size: 0.8rem;
-      color: var(--text2);
+      background: #f3f4f6;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      color: var(--text-light);
     }
+
     /* CV Section */
-    #cv { text-align: center; }
+    #cv {
+      text-align: center;
+      background: var(--bg-alt);
+    }
+
     .cv-card {
-      max-width: 600px; margin: 0 auto;
-      background: white; border-radius: 12px;
-      padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
+
     .cv-meta {
-      display: flex; justify-content: center;
-      gap: 2rem; margin: 2rem 0; flex-wrap: wrap;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
     }
-    .cv-meta-item { text-align: center; }
+
+    .cv-meta-item {
+      text-align: center;
+    }
+
     .cv-meta-label {
-      font-family: var(--mono); font-size: 0.9rem;
-      color: var(--text2); margin-bottom: 0.3rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-bottom: 0.3rem;
     }
+
     .cv-meta-val {
-      font-weight: 600; color: var(--text);
+      font-weight: 600;
+      color: var(--text);
     }
+
     /* Contact */
-    #contact { background: linear-gradient(135deg, rgba(78,115,223,0.05), transparent); }
+    #contact {
+      background: var(--bg-alt);
+    }
+
     .contact-form {
-      max-width: 600px; margin: 0 auto;
-      background: white; padding: 2rem;
-      border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
     }
+
     .contact-grid {
-      display: flex; justify-content: center;
-      gap: 2rem; margin-top: 2rem; flex-wrap: wrap;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
     }
+
     .contact-link {
-      display: flex; align-items: center; gap: 1rem;
-      color: var(--text2); text-decoration: none;
-      font-size: 1.5rem; transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 1.5rem;
+      transition: all 0.3s;
     }
-    .contact-link:hover { color: var(--primary); }
+
+    .contact-link:hover {
+      color: var(--primary);
+    }
+
     /* Footer */
     footer {
-      padding: 3rem 5rem; text-align: center;
-      border-top: 1px solid rgba(0,0,0,0.05);
-      font-family: var(--mono); font-size: 0.9rem;
-      color: var(--text2);
+      padding: 3rem 5rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-light);
     }
+
     /* Responsive */
     @media (max-width: 768px) {
-      nav, section { padding: 1rem; }
-      #hero { padding: 4rem 1rem; text-align: center; }
-      .skills-grid, .projects-grid { grid-template-columns: 1fr; }
-      .contact-grid { flex-direction: column; }
+      nav {
+        padding: 1rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      #hero {
+        padding: 4rem 1rem;
+        text-align: center;
+      }
+
+      section {
+        padding: 3rem 1rem;
+      }
+
+      .skills-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-grid {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      footer {
+        padding: 2rem 1rem;
+      }
     }
   </style>
 </head>
 <body>
   <!-- Navigation -->
   <nav>
-    <div class="nav-logo">mervyn.sainfranc()</div>
+    <div class="nav-logo">~/mervyn.sainfranc</div>
     <ul class="nav-links">
       <li><a href="#skills">Compétences</a></li>
       <li><a href="#experience">Expérience</a></li>
       <li><a href="#projects">Projets</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#cv" class="btn-primary">Mon CV</a>
+    <a href="#cv" class="nav-cta">CV</a>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section id="hero">
     <div class="hero-content">
+      <div class="hero-tag">
+        <span>Disponible en alternance · Nantes</span>
+      </div>
       <h1 class="hero-name">Mervyn Sainfranc</h1>
       <div class="hero-title">
         <span id="typed-text"></span><span id="typed-cursor"></span>
@@ -296,26 +653,27 @@
         virtualisation, réseau et automatisation.
       </p>
       <div class="hero-btns">
-        <a href="#experience" class="btn-primary">Mon Parcours</a>
-        <a href="#contact" class="btn-primary" style="background: var(--success);">Me Contacter</a>
+        <a href="#experience" class="btn-primary">Mon parcours</a>
+        <a href="#contact" class="btn-secondary">Me contacter</a>
       </div>
     </div>
   </section>
 
-  <!-- Skills Section -->
+  <!-- Compétences -->
   <section id="skills">
-    <h2 class="section-title">Compétences Techniques</h2>
+    <div class="section-tag">01. Compétences</div>
+    <h2 class="section-title">Mon stack technique</h2>
     <div class="skills-grid">
       <!-- Système & Virtualisation -->
       <div class="skill-card">
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
-          <span style="font-size: 1.5rem;">🖥️</span>
-          <h3 style="color: var(--primary);">Système & Virtualisation</h3>
+        <div class="skill-category-title">
+          <span>🖥️</span>
+          <h3>Système & Virtualisation</h3>
         </div>
         <div class="skill-item">
           <div class="skill-name">
             <span>Windows Server (AD, GPO, DNS)</span>
-            <span style="color: var(--success); font-size: 0.9rem;">85%</span>
+            <span class="skill-level">Intermédiaire</span>
           </div>
           <div class="skill-bar">
             <div class="skill-bar-fill" style="width: 85%;"></div>
@@ -324,16 +682,7 @@
         <div class="skill-item">
           <div class="skill-name">
             <span>Linux (Ubuntu/Debian)</span>
-            <span style="color: var(--success); font-size: 0.9rem;">80%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-bar-fill" style="width: 80%;"></div>
-          </div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">
-            <span>Proxmox VE</span>
-            <span style="color: var(--success); font-size: 0.9rem;">75%</span>
+            <span class="skill-level">Intermédiaire</span>
           </div>
           <div class="skill-bar">
             <div class="skill-bar-fill" style="width: 75%;"></div>
@@ -341,8 +690,17 @@
         </div>
         <div class="skill-item">
           <div class="skill-name">
+            <span>Proxmox VE</span>
+            <span class="skill-level">Intermédiaire</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="width: 80%;"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">
             <span>VMware / VirtualBox</span>
-            <span style="color: var(--success); font-size: 0.9rem;">70%</span>
+            <span class="skill-level">Intermédiaire</span>
           </div>
           <div class="skill-bar">
             <div class="skill-bar-fill" style="width: 70%;"></div>
@@ -352,14 +710,14 @@
 
       <!-- Réseau & Sécurité -->
       <div class="skill-card">
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
-          <span style="font-size: 1.5rem;">🌐</span>
-          <h3 style="color: var(--primary);">Réseau & Sécurité</h3>
+        <div class="skill-category-title">
+          <span>🌐</span>
+          <h3>Réseau & Sécurité</h3>
         </div>
         <div class="skill-item">
           <div class="skill-name">
             <span>Firewall Stormshield</span>
-            <span style="color: var(--success); font-size: 0.9rem;">75%</span>
+            <span class="skill-level">Intermédiaire</span>
           </div>
           <div class="skill-bar">
             <div class="skill-bar-fill" style="width: 75%;"></div>
@@ -368,7 +726,7 @@
         <div class="skill-item">
           <div class="skill-name">
             <span>Switches Managed / VLANs</span>
-            <span style="color: var(--success); font-size: 0.9rem;">70%</span>
+            <span class="skill-level">Intermédiaire</span>
           </div>
           <div class="skill-bar">
             <div class="skill-bar-fill" style="width: 70%;"></div>
@@ -377,7 +735,7 @@
         <div class="skill-item">
           <div class="skill-name">
             <span>Bornes Wi-Fi Aruba</span>
-            <span style="color: var(--success); font-size: 0.9rem;">65%</span>
+            <span class="skill-level">Intermédiaire</span>
           </div>
           <div class="skill-bar">
             <div class="skill-bar-fill" style="width: 65%;"></div>
@@ -386,7 +744,7 @@
         <div class="skill-item">
           <div class="skill-name">
             <span>TCP/IP, DNS, DHCP</span>
-            <span style="color: var(--success); font-size: 0.9rem;">80%</span>
+            <span class="skill-level">Intermédiaire</span>
           </div>
           <div class="skill-bar">
             <div class="skill-bar-fill" style="width: 80%;"></div>
@@ -396,32 +754,14 @@
 
       <!-- DevOps & Automatisation -->
       <div class="skill-card">
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
-          <span style="font-size: 1.5rem;">⚙️</span>
-          <h3 style="color: var(--primary);">DevOps & Automatisation</h3>
+        <div class="skill-category-title">
+          <span>⚙️</span>
+          <h3>DevOps & Automatisation</h3>
         </div>
         <div class="skill-item">
           <div class="skill-name">
             <span>Git / GitHub</span>
-            <span style="color: var(--success); font-size: 0.9rem;">40%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-bar-fill" style="width: 40%; background: #f87171;"></div>
-          </div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">
-            <span>Ansible</span>
-            <span style="color: var(--success); font-size: 0.9rem;">35%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-bar-fill" style="width: 35%; background: #f87171;"></div>
-          </div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">
-            <span>Docker</span>
-            <span style="color: var(--success); font-size: 0.9rem;">30%</span>
+            <span class="skill-level">Débutant</span>
           </div>
           <div class="skill-bar">
             <div class="skill-bar-fill" style="width: 30%; background: #f87171;"></div>
@@ -429,34 +769,8 @@
         </div>
         <div class="skill-item">
           <div class="skill-name">
-            <span>Bash Scripting</span>
-            <span style="color: var(--success); font-size: 0.9rem;">40%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-bar-fill" style="width: 40%; background: #f87171;"></div>
-          </div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">
-            <span>CI/CD (GitHub Actions)</span>
-            <span style="color: var(--success); font-size: 0.9rem;">20%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-bar-fill" style="width: 20%; background: #f87171;"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cloud & Monitoring -->
-      <div class="skill-card">
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
-          <span style="font-size: 1.5rem;">☁️</span>
-          <h3 style="color: var(--primary);">Cloud & Monitoring</h3>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">
-            <span>Oracle Cloud</span>
-            <span style="color: var(--success); font-size: 0.9rem;">25%</span>
+            <span>Ansible</span>
+            <span class="skill-level">Débutant</span>
           </div>
           <div class="skill-bar">
             <div class="skill-bar-fill" style="width: 25%; background: #f87171;"></div>
@@ -464,8 +778,8 @@
         </div>
         <div class="skill-item">
           <div class="skill-name">
-            <span>AWS</span>
-            <span style="color: var(--success); font-size: 0.9rem;">20%</span>
+            <span>Docker</span>
+            <span class="skill-level">Débutant</span>
           </div>
           <div class="skill-bar">
             <div class="skill-bar-fill" style="width: 20%; background: #f87171;"></div>
@@ -473,49 +787,96 @@
         </div>
         <div class="skill-item">
           <div class="skill-name">
-            <span>Prometheus/Grafana</span>
-            <span style="color: var(--success); font-size: 0.9rem;">15%</span>
+            <span>Bash Scripting</span>
+            <span class="skill-level">Débutant</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="width: 30%; background: #f87171;"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>CI/CD (GitHub Actions)</span>
+            <span class="skill-level">Débutant</span>
           </div>
           <div class="skill-bar">
             <div class="skill-bar-fill" style="width: 15%; background: #f87171;"></div>
           </div>
         </div>
       </div>
+
+      <!-- Cloud & Monitoring -->
+      <div class="skill-card">
+        <div class="skill-category-title">
+          <span>☁️</span>
+          <h3>Cloud & Monitoring</h3>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>Oracle Cloud</span>
+            <span class="skill-level">Débutant</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="width: 20%; background: #f87171;"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>AWS</span>
+            <span class="skill-level">Débutant</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="width: 15%; background: #f87171;"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>Prometheus/Grafana</span>
+            <span class="skill-level">Débutant</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="width: 10%; background: #f87171;"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Experience Section -->
+  <!-- Expérience -->
   <section id="experience">
-    <h2 class="section-title">Expérience Professionnelle</h2>
+    <div class="section-tag">02. Expérience</div>
+    <h2 class="section-title">Mon parcours professionnel</h2>
     <div class="timeline">
-      <!-- Expérience 1: Alternance actuelle -->
+      <!-- Alternance actuelle -->
       <div class="tl-item">
         <div class="tl-dot active"></div>
         <div class="tl-date">
-          OCT. 2025 — SEPT. 2026
-          <span style="background: rgba(78,115,223,0.1); color: var(--primary); padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; margin-left: 0.5rem;">EN COURS</span>
+          Oct. 2025 — Sept. 2026
+          <span class="tl-active">● EN COURS</span>
         </div>
         <div class="tl-title">Alternant Technicien Système & Réseau</div>
-        <div class="tl-company">WICONNECT · ALENÇON</div>
+        <div class="tl-company">Wiconnect · Alençon</div>
         <div class="tl-tags">
           <span class="tl-tag">Windows Server</span>
           <span class="tl-tag">Proxmox</span>
           <span class="tl-tag">Stormshield</span>
+          <span class="tl-tag">Ansible</span>
           <span class="tl-tag">Support N1/N2</span>
         </div>
         <div class="tl-bullets">
-          <div class="tl-bullet">Administration d’environnements virtualisés (Proxmox)</div>
-          <div class="tl-bullet">Configuration d'équipements réseau : switches, firewalls Stormshield, bornes Wi-Fi Aruba</div>
-          <div class="tl-bullet">Assistance support niveau 1</div>
+          <div class="tl-bullet">Administration d'infrastructures Windows Server (AD, GPO, DNS)</div>
+          <div class="tl-bullet">Gestion d'environnements virtualisés avec Proxmox</div>
+          <div class="tl-bullet">Configuration de firewalls Stormshield et bornes Wi-Fi Aruba</div>
+          <div class="tl-bullet">Automatisation de tâches avec Ansible et scripts Bash</div>
         </div>
       </div>
 
-      <!-- Expérience 2: Stage précédent -->
+      <!-- Stage précédent -->
       <div class="tl-item">
         <div class="tl-dot"></div>
-        <div class="tl-date">MAI–JUIN 2024 & JAN.–FÉV. 2025</div>
+        <div class="tl-date">Mai–Juin 2024 & Jan.–Fév. 2025</div>
         <div class="tl-title">Stage Technicien Système & Réseau</div>
-        <div class="tl-company">WICONNECT · ALENÇON</div>
+        <div class="tl-company">Wiconnect · Alençon</div>
         <div class="tl-tags">
           <span class="tl-tag">Windows Server</span>
           <span class="tl-tag">Proxmox</span>
@@ -523,132 +884,130 @@
           <span class="tl-tag">Support</span>
         </div>
         <div class="tl-bullets">
-          <div class="tl-bullet">Intervention sur les postes utilisateurs pour résoudre les problèmes informatiques
-</div>
-          <div class="tl-bullet">Installation de logiciels et configuration de postes Windows
-</div>
-          <div class="tl-bullet">Dépannage hardware : changement de composants (disques durs, RAM, etc.)
-</div>
+          <div class="tl-bullet">Administration de serveurs Windows et environnements Proxmox</div>
+          <div class="tl-bullet">Configuration de switches et firewalls Stormshield</div>
+          <div class="tl-bullet">Support technique utilisateurs (N1/N2)</div>
         </div>
       </div>
 
-      <!-- Expérience 3: Stage initial -->
+      <!-- Stage initial -->
       <div class="tl-item">
         <div class="tl-dot"></div>
-        <div class="tl-date">NOV.–DÉC. 2022 & MARS–AVR. 2023</div>
+        <div class="tl-date">Nov.–Déc. 2022 & Mars–Avr. 2023</div>
         <div class="tl-title">Stagiaire Technicien Système & Réseau</div>
-        <div class="tl-company">SINSI · HÔTEL DE VILLE D'ALENÇON</div>
+        <div class="tl-company">SINSI — Hôtel de ville d'Alençon</div>
         <div class="tl-tags">
           <span class="tl-tag">Windows</span>
           <span class="tl-tag">Support N1</span>
           <span class="tl-tag">Hardware</span>
         </div>
         <div class="tl-bullets">
-          <div class="tl-bullet">Diagnostic et dépannage matériel
-</div>
-          <div class="tl-bullet">• Installation de systèmes d'exploitation
-</div>
+          <div class="tl-bullet">Résolution de problèmes sur postes utilisateurs</div>
+          <div class="tl-bullet">Maintenance et dépannage matériel (RAM, disques durs)</div>
+          <div class="tl-bullet">Installation et configuration de logiciels</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Projects Section -->
+  <!-- Projets -->
   <section id="projects">
-    <h2 class="section-title">Projets Réalisés</h2>
+    <div class="section-tag">03. Projets</div>
+    <h2 class="section-title">Ce que je construis</h2>
     <div class="projects-grid">
-      <!-- Projet 1: Laboratoire DevOps -->
+      <!-- Laboratoire DevOps -->
       <div class="project-card">
-        <span class="proj-status status-wip">🔄 EN COURS</span>
+        <span class="proj-status status-wip">🔄 En cours</span>
         <div class="proj-icon">🐳</div>
-        <div class="proj-name">LABORATOIRE DEVOPS</div>
+        <div class="proj-name">Laboratoire DevOps</div>
         <div class="proj-desc">
           Environnement d'apprentissage pour maîtriser Docker, Ansible et CI/CD.
-          <strong>NIVEAU : INTERMÉDIAIRE</strong>
+          <strong>Niveau : Intermédiaire</strong>
         </div>
         <div class="proj-tech">
-          <span>DOCKER</span>
-          <span>ANSIBLE</span>
-          <span>GITHUB ACTIONS</span>
-          <span>ORACLE CLOUD</span>
+          <span>Docker</span>
+          <span>Ansible</span>
+          <span>GitHub Actions</span>
+          <span>Oracle Cloud</span>
         </div>
       </div>
 
-      <!-- Projet 2: Cluster Kubernetes -->
+      <!-- Cluster Kubernetes -->
       <div class="project-card">
-        <span class="proj-status status-wip">🚧 EN CONSTRUCTION</span>
+        <span class="proj-status status-wip">🚧 En construction</span>
         <div class="proj-icon">☸️</div>
-        <div class="proj-name">CLUSTER KUBERNETES</div>
+        <div class="proj-name">Cluster Kubernetes</div>
         <div class="proj-desc">
           Déploiement d'applications conteneurisées avec Minikube.
-          <strong>OBJECTIF : DÉBUT 2026</strong>
+          <strong>Objectif : Début 2026</strong>
         </div>
         <div class="proj-tech">
-          <span>KUBERNETES</span>
-          <span>HELM</span>
-          <span>DOCKER</span>
+          <span>Kubernetes</span>
+          <span>Helm</span>
+          <span>Docker</span>
         </div>
       </div>
 
-      <!-- Projet 3: Stack Monitoring -->
+      <!-- Stack Monitoring -->
       <div class="project-card">
-        <span class="proj-status status-wip">🎯 PLANIFIÉ</span>
+        <span class="proj-status status-wip">🎯 Planifié</span>
         <div class="proj-icon">📊</div>
-        <div class="proj-name">STACK MONITORING</div>
+        <div class="proj-name">Stack Monitoring</div>
         <div class="proj-desc">
           Surveillance d'infrastructure avec Prometheus et Grafana.
-          <strong>OBJECTIF : 2026</strong>
+          <strong>Objectif : 2026</strong>
         </div>
         <div class="proj-tech">
-          <span>PROMETHEUS</span>
-          <span>GRAFANA</span>
-          <span>ALERTMANAGER</span>
+          <span>Prometheus</span>
+          <span>Grafana</span>
+          <span>AlertManager</span>
         </div>
       </div>
 
-      <!-- Projet 4: Infrastructure as Code -->
+      <!-- Infrastructure as Code -->
       <div class="project-card">
-        <span class="proj-status status-wip">🔄 EN APPRENTISSAGE</span>
+        <span class="proj-status status-wip">🔄 En apprentissage</span>
         <div class="proj-icon">🏗️</div>
-        <div class="proj-name">INFRASTRUCTURE AS CODE</div>
+        <div class="proj-name">Infrastructure as Code</div>
         <div class="proj-desc">
           Automatisation de déploiements cloud avec Terraform.
-          <strong>NIVEAU : DÉBUTANT</strong>
+          <strong>Niveau : Débutant</strong>
         </div>
         <div class="proj-tech">
-          <span>TERRAFORM</span>
+          <span>Terraform</span>
           <span>AWS</span>
-          <span>ANSIBLE</span>
+          <span>Ansible</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CV Section -->
+  <!-- CV -->
   <section id="cv">
+    <div class="section-tag">04. CV</div>
     <h2 class="section-title">Curriculum Vitæ</h2>
     <div class="cv-card">
-      <h2 style="margin-bottom: 1rem;">Mervyn Sainfranc</h2>
-      <p style="color: var(--text2); margin-bottom: 2rem; line-height: 1.7;">
+      <h2>Mervyn Sainfranc</h2>
+      <p>
         Technicien Système & Réseau en alternance, orienté DevOps et Cloud.<br>
         Disponible pour des opportunités à partir de <strong>septembre 2026</strong>.
       </p>
       <div class="cv-meta">
         <div class="cv-meta-item">
           <span class="cv-meta-label">DISPONIBILITÉ</span>
-          <span class="cv-meta-val">SEPT. 2026</span>
+          <span class="cv-meta-val">Sept. 2026</span>
         </div>
         <div class="cv-meta-item">
           <span class="cv-meta-label">LOCALISATION</span>
-          <span class="cv-meta-val">NANTES, FRANCE</span>
+          <span class="cv-meta-val">Nantes, France</span>
         </div>
         <div class="cv-meta-item">
           <span class="cv-meta-label">CONTRAT</span>
-          <span class="cv-meta-val">ALTERNANCE / CDI</span>
+          <span class="cv-meta-val">Alternance / CDI</span>
         </div>
         <div class="cv-meta-item">
           <span class="cv-meta-label">MOBILITÉ</span>
-          <span class="cv-meta-val">PERMIS B</span>
+          <span class="cv-meta-val">Permis B</span>
         </div>
       </div>
       <a href="Curriculum Vitae - SAINFRANC MERVYN.pdf" class="btn-primary" download>
@@ -657,11 +1016,12 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Contact -->
   <section id="contact">
+    <div class="section-tag">05. Contact</div>
     <h2 class="section-title">Travaillons ensemble</h2>
     <div class="contact-form">
-      <p style="text-align: center; color: var(--text2); margin-bottom: 2rem; line-height: 1.8;">
+      <p>
         Vous avez une question, un projet ou une opportunité ?<br>
         N'hésitez pas à me contacter pour discuter DevOps, cloud ou infrastructure.
       </p>
@@ -669,21 +1029,21 @@
         <a href="mailto:sainfranc.mervyn61@gmail.com" class="contact-link">
           <div>📧</div>
           <div>
-            <div style="font-family: var(--mono); font-size: 0.9rem; color: var(--text2);">EMAIL</div>
+            <div style="font-family: var(--mono); font-size: 0.9rem; color: var(--text-light);">EMAIL</div>
             <div style="font-weight: 600;">sainfranc.mervyn61@gmail.com</div>
           </div>
         </a>
         <a href="https://www.linkedin.com/in/mervyn-sainfranc-45ab35279/" class="contact-link" target="_blank">
           <div>💼</div>
           <div>
-            <div style="font-family: var(--mono); font-size: 0.9rem; color: var(--text2);">LINKEDIN</div>
+            <div style="font-family: var(--mono); font-size: 0.9rem; color: var(--text-light);">LINKEDIN</div>
             <div style="font-weight: 600;">Mervyn Sainfranc</div>
           </div>
         </a>
-        <a href="https://github.com/sainfrancmervyn61-cyber/mervyn-sainfranc" class="contact-link" target="_blank">
+        <a href="https://github.com/mervyn-sainfranc" class="contact-link" target="_blank">
           <div>🐙</div>
           <div>
-            <div style="font-family: var(--mono); font-size: 0.9rem; color: var(--text2);">GITHUB</div>
+            <div style="font-family: var(--mono); font-size: 0.9rem; color: var(--text-light);">GITHUB</div>
             <div style="font-weight: 600;">github.com/mervyn-sainfranc</div>
           </div>
         </a>
@@ -700,42 +1060,43 @@
   <script>
     // Effet de frappe
     const phrases = [
-      "Technicien Système & Réseau",
-      "Alternant DevOps @ Wiconnect",
-      "Passionné par l'automatisation 🤖",
-      "Bachelor Cloud & Cybersécurité",
-      "Proxmox · Docker · Ansible"
+      'Technicien Système & Réseau',
+      'Alternant DevOps @ Wiconnect',
+      'Passionné par l\'automatisation 🤖',
+      'Bachelor Cloud & Cybersécurité',
+      'Proxmox · Docker · Ansible'
     ];
-    let currentPhrase = 0, currentChar = 0, isDeleting = false;
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
     const typedText = document.getElementById('typed-text');
     const cursor = document.getElementById('typed-cursor');
 
     function type() {
-      const phrase = phrases[currentPhrase];
+      const currentPhrase = phrases[phraseIndex];
       if (!isDeleting) {
-        typedText.textContent = phrase.substring(0, ++currentChar);
-        if (currentChar === phrase.length) {
+        typedText.textContent = currentPhrase.slice(0, ++charIndex);
+        if (charIndex === currentPhrase.length) {
           isDeleting = true;
           cursor.style.opacity = 0;
           setTimeout(type, 1500);
-        } else {
-          setTimeout(type, 100);
+          return;
         }
       } else {
-        typedText.textContent = phrase.substring(0, --currentChar);
-        if (currentChar === 0) {
+        typedText.textContent = currentPhrase.slice(0, --charIndex);
+        if (charIndex === 0) {
           isDeleting = false;
-          currentPhrase = (currentPhrase + 1) % phrases.length;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
           cursor.style.opacity = 1;
           setTimeout(type, 500);
-        } else {
-          setTimeout(type, 50);
+          return;
         }
       }
+      setTimeout(type, isDeleting ? 50 : 100);
     }
     type();
 
-    // Animation des barres de compétences au scroll
+    // Animation des barres de compétences
     document.addEventListener('DOMContentLoaded', function() {
       const skillBars = document.querySelectorAll('.skill-bar-fill');
       const observer = new IntersectionObserver((entries) => {
