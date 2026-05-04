@@ -7,25 +7,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* =============================================
+       VARIABLES CSS (pour une maintenance facile)
+       ============================================= */
     :root {
-      --bg: #ffffff;
-      --bg1: #f8f9fa;
-      --bg2: #f1f3f5;
-      --bg3: #e9ecef;
-      --line: #dee2e6;
-      --primary: #2563eb;
-      --primary-light: #3b82f6;
-      --secondary: #6c757d;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --text: #212529;
-      --text2: #6c757d;
-      --text3: #adb5bd;
-      --mono: 'Space Mono', monospace;
-      --sans: 'Inter', sans-serif;
+      --bg: #ffffff;               /* Fond principal */
+      --bg1: #f8f9fa;              /* Fond secondaire clair */
+      --bg2: #f1f3f5;              /* Fond pour les cartes */
+      --bg3: #e9ecef;              /* Fond pour les éléments secondaires */
+      --line: #dee2e6;             /* Couleur des bordures */
+      --primary: #2563eb;          /* Couleur principale (bleu) */
+      --primary-light: #3b82f6;    /* Bleu plus clair pour les survols */
+      --secondary: #6c757d;        /* Couleur secondaire (gris) */
+      --success: #10b981;          /* Vert pour les succès */
+      --warning: #f59e0b;          /* Orange pour les avertissements */
+      --danger: #ef4444;           /* Rouge pour les erreurs */
+      --text: #212529;             /* Texte principal */
+      --text2: #6c757d;            /* Texte secondaire */
+      --text3: #adb5bd;            /* Texte tertiaire */
+      --mono: 'Space Mono', monospace; /* Police pour le code */
+      --sans: 'Inter', sans-serif;    /* Police principale */
     }
 
+    /* =============================================
+       RESET ET BASE
+       ============================================= */
     * {
       margin: 0;
       padding: 0;
@@ -60,7 +66,9 @@
       pointer-events: none;
     }
 
-    /* Navigation */
+    /* =============================================
+       NAVIGATION
+       ============================================= */
     nav {
       position: fixed;
       top: 0;
@@ -113,24 +121,6 @@
       margin-right: 4px;
     }
 
-    /* Nouveau lien pour les guides */
-    .nav-guides {
-      font-family: var(--mono);
-      font-size: 12px;
-      padding: 8px 18px;
-      border: 1px solid var(--primary);
-      color: var(--primary);
-      background: transparent;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .nav-guides:hover {
-      background: var(--primary);
-      color: white;
-    }
-
     .nav-cta {
       font-family: var(--mono);
       font-size: 12px;
@@ -148,7 +138,9 @@
       color: white;
     }
 
-    /* Hero Section */
+    /* =============================================
+       SECTION HERO
+       ============================================= */
     #hero {
       min-height: 100vh;
       display: flex;
@@ -290,6 +282,7 @@
       font-weight: 600;
       font-size: 15px;
       transition: all 0.2s;
+      cursor: pointer; /* Curseur en forme de main pour indiquer le clic */
     }
 
     .btn-primary:hover {
@@ -308,6 +301,7 @@
       text-decoration: none;
       font-size: 15px;
       transition: all 0.2s;
+      cursor: pointer; /* Curseur en forme de main */
     }
 
     .btn-ghost:hover {
@@ -351,7 +345,9 @@
       margin-top: 6px;
     }
 
-    /* Sections générales */
+    /* =============================================
+       SECTIONS GÉNÉRALES
+       ============================================= */
     section {
       padding: 100px 80px;
     }
@@ -385,7 +381,9 @@
       color: var(--text);
     }
 
-    /* Compétences */
+    /* =============================================
+       SECTION COMPÉTENCES
+       ============================================= */
     #skills {
       background: var(--bg1);
     }
@@ -424,21 +422,10 @@
       font-size: 16px;
     }
 
-    .icon-sys {
-      background: rgba(37, 99, 235, 0.1);
-    }
-
-    .icon-net {
-      background: rgba(6, 182, 212, 0.1);
-    }
-
-    .icon-dev {
-      background: rgba(16, 185, 129, 0.1);
-    }
-
-    .icon-cloud {
-      background: rgba(245, 158, 11, 0.1);
-    }
+    .icon-sys { background: rgba(37, 99, 235, 0.1); }
+    .icon-net { background: rgba(6, 182, 212, 0.1); }
+    .icon-dev { background: rgba(16, 185, 129, 0.1); }
+    .icon-cloud { background: rgba(245, 158, 11, 0.1); }
 
     .skill-item {
       margin-bottom: 18px;
@@ -464,20 +451,9 @@
       font-weight: 700;
     }
 
-    .lvl-confirm {
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--success);
-    }
-
-    .lvl-inter {
-      background: rgba(245, 158, 11, 0.1);
-      color: var(--warning);
-    }
-
-    .lvl-deb {
-      background: rgba(239, 68, 68, 0.1);
-      color: var(--danger);
-    }
+    .lvl-confirm { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+    .lvl-inter { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+    .lvl-deb { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
 
     .skill-bar-bg {
       height: 3px;
@@ -492,7 +468,9 @@
       transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Expérience */
+    /* =============================================
+       SECTION EXPÉRIENCE
+       ============================================= */
     #experience {
       background: var(--bg);
     }
@@ -605,17 +583,22 @@
       margin-top: 2px;
     }
 
-    /* Projets */
+    /* =============================================
+       SECTION PROJETS (UN SEUL PROJET : NEXTCLOUD)
+       ============================================= */
     #projects {
       background: var(--bg1);
     }
 
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Grille responsive */
       gap: 24px;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
+    /* Carte de projet cliquable */
     .proj-card {
       background: var(--bg2);
       border: 1px solid var(--line);
@@ -627,6 +610,7 @@
       transition: all 0.3s;
       position: relative;
       overflow: hidden;
+      cursor: pointer; /* Curseur en main pour indiquer le clic */
     }
 
     .proj-card::before {
@@ -647,6 +631,14 @@
       opacity: 1;
     }
 
+    /* Lien vers le guide Nextcloud (couvre toute la carte) */
+    .proj-card a {
+      position: absolute;
+      inset: 0;
+      text-decoration: none;
+      color: inherit;
+    }
+
     .proj-status {
       position: absolute;
       top: 20px;
@@ -656,11 +648,7 @@
       padding: 3px 8px;
       border-radius: 3px;
       text-transform: uppercase;
-    }
-
-    .status-wip {
-      background: rgba(245, 158, 11, 0.1);
-      color: var(--warning);
+      z-index: 1; /* Assure que le badge reste visible */
     }
 
     .status-done {
@@ -676,12 +664,14 @@
       align-items: center;
       justify-content: center;
       font-size: 24px;
+      z-index: 1;
     }
 
     .proj-name {
       font-size: 17px;
       font-weight: 700;
       color: var(--text);
+      z-index: 1;
     }
 
     .proj-desc {
@@ -689,12 +679,14 @@
       color: var(--text2);
       line-height: 1.7;
       flex: 1;
+      z-index: 1;
     }
 
     .proj-tech {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
+      z-index: 1;
     }
 
     .proj-tech span {
@@ -707,7 +699,9 @@
       color: var(--text3);
     }
 
-    /* CV */
+    /* =============================================
+       SECTION CV
+       ============================================= */
     #cv {
       background: var(--bg);
       padding: 100px 80px;
@@ -784,7 +778,9 @@
       font-weight: 600;
     }
 
-    /* Contact */
+    /* =============================================
+       SECTION CONTACT
+       ============================================= */
     #contact {
       background: var(--bg1);
     }
@@ -828,6 +824,7 @@
       text-decoration: none;
       color: var(--text2);
       transition: all 0.2s;
+      cursor: pointer;
     }
 
     .contact-link:hover {
@@ -866,7 +863,9 @@
       color: var(--text);
     }
 
-    /* Footer */
+    /* =============================================
+       FOOTER
+       ============================================= */
     footer {
       padding: 40px 80px;
       border-top: 1px solid var(--line);
@@ -885,7 +884,9 @@
       color: var(--primary);
     }
 
-    /* Animations */
+    /* =============================================
+       ANIMATIONS
+       ============================================= */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -897,10 +898,12 @@
       transform: translateY(0);
     }
 
-    /* Responsive */
+    /* =============================================
+       RESPONSIVE (pour mobile)
+       ============================================= */
     @media (max-width: 900px) {
       nav .nav-links {
-        display: none;
+        display: none; /* Cache les liens de navigation sur mobile */
       }
 
       #hero {
@@ -908,7 +911,7 @@
       }
 
       .hero-stats {
-        display: none;
+        display: none; /* Cache les stats sur mobile */
       }
 
       section {
@@ -929,13 +932,13 @@
       .skills-grid,
       .projects-grid,
       .contact-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
       }
     }
   </style>
 </head>
 <body>
-  <!-- NAV -->
+  <!-- NAVIGATION -->
   <nav>
     <div class="nav-logo">~/mervyn<span>.sainfranc</span></div>
     <ul class="nav-links">
@@ -947,7 +950,7 @@
     <a href="#cv" class="nav-cta">📄 CV</a>
   </nav>
 
-  <!-- HERO -->
+  <!-- SECTION HERO -->
   <section id="hero">
     <div class="hero-grid-bg"></div>
     <div class="hero-glow"></div>
@@ -987,11 +990,12 @@
     </div>
   </section>
 
-  <!-- SKILLS -->
+  <!-- SECTION COMPÉTENCES -->
   <section id="skills">
     <div class="section-tag">01. Compétences</div>
     <h2 class="section-title">Mon stack technique</h2>
     <div class="skills-grid">
+      <!-- Groupe : Système & Virtualisation -->
       <div class="skill-group reveal">
         <div class="skill-group-title">
           <div class="skill-group-icon icon icon-sys">🖥️</div>
@@ -1027,6 +1031,7 @@
         </div>
       </div>
 
+      <!-- Groupe : Réseau & Sécurité -->
       <div class="skill-group reveal" style="transition-delay: 0.1s;">
         <div class="skill-group-title">
           <div class="skill-group-icon icon icon-net">🌐</div>
@@ -1062,6 +1067,7 @@
         </div>
       </div>
 
+      <!-- Groupe : DevOps & Automatisation -->
       <div class="skill-group reveal" style="transition-delay: 0.2s;">
         <div class="skill-group-title">
           <div class="skill-group-icon icon icon-dev">⚙️</div>
@@ -1104,6 +1110,7 @@
         </div>
       </div>
 
+      <!-- Groupe : Cloud & Monitoring -->
       <div class="skill-group reveal" style="transition-delay: 0.3s;">
         <div class="skill-group-title">
           <div class="skill-group-icon icon icon-cloud">☁️</div>
@@ -1134,11 +1141,12 @@
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
+  <!-- SECTION EXPÉRIENCE -->
   <section id="experience">
     <div class="section-tag">02. Expérience</div>
     <h2 class="section-title">Mon parcours professionnel</h2>
     <div class="timeline">
+      <!-- Expérience 1 : Alternance chez Wiconnect -->
       <div class="tl-item reveal">
         <div class="tl-dot active"></div>
         <div class="tl-date">
@@ -1162,6 +1170,7 @@
         </div>
       </div>
 
+      <!-- Expérience 2 : Stage chez Wiconnect -->
       <div class="tl-item reveal" style="transition-delay: 0.1s;">
         <div class="tl-dot"></div>
         <div class="tl-date">Mai–Juin 2024 & Jan.–Fév. 2025</div>
@@ -1180,6 +1189,7 @@
         </div>
       </div>
 
+      <!-- Expérience 3 : Stage à l'Hôtel de ville d'Alençon -->
       <div class="tl-item reveal" style="transition-delay: 0.2s;">
         <div class="tl-dot"></div>
         <div class="tl-date">Nov.–Déc. 2022 & Mars–Avr. 2023</div>
@@ -1199,37 +1209,20 @@
     </div>
   </section>
 
-  <!-- PROJECTS -->
+  <!-- SECTION PROJETS (UN SEUL PROJET : NEXTCLOUD) -->
   <section id="projects">
     <div class="section-tag">03. Projets</div>
     <h2 class="section-title">Ce que je construis</h2>
     <div class="projects-grid">
-      <!-- Projet 1: Laboratoire DevOps -->
+      <!-- Carte du projet Nextcloud (cliquable) -->
       <div class="proj-card reveal">
-        <span class="proj-status status-wip">🔄 En cours</span>
-        <div class="proj-icon" style="background: rgba(37, 99, 235, 0.1); font-size: 28px;">🐳</div>
-        <div class="proj-name">Laboratoire DevOps</div>
-        <div class="proj-desc">
-          Environnement d'apprentissage pour maîtriser Docker, Ansible et CI/CD.
-          <strong>Niveau : Intermédiaire</strong>
-        </div>
-        <div class="proj-tech">
-          <span>Docker</span>
-          <span>Ansible</span>
-          <span>GitHub Actions</span>
-          <span>Oracle Cloud</span>
-        </div>
-      </div>
-
-      <!-- Projet 2: Guide Nextcloud -->
-      <div class="proj-card reveal" style="transition-delay: 0.1s;">
-        <span class="proj-status status-done">En cours </span>
+        <a href="nextcloud-guide.html"></a> <!-- Lien qui couvre toute la carte -->
+        <span class="proj-status status-done">✅ Terminée</span>
         <div class="proj-icon" style="background: rgba(37, 99, 235, 0.1); font-size: 28px;">☁️</div>
         <div class="proj-name">Guide Nextcloud — Déploiement complet</div>
         <div class="proj-desc">
-          <a href="Nextcloud.html" class="btn-primary" style="display: inline-flex; margin: 0 auto;" /a>
-          Documentation technique pour déployer une infrastructure Nextcloud avec Nginx, MariaDB, SSL auto-signé, sauvegardes NAS et accès distant.
-          <strong>Statut : En cour</strong>
+          Documentation technique pour déployer une infrastructure Nextcloud avec Apache2, MariaDB, SSL auto-signé, sauvegardes NAS et accès distant.
+          <strong>Statut : Finalisé</strong>
         </div>
         <div class="proj-tech">
           <span>Nextcloud</span>
@@ -1238,60 +1231,11 @@
           <span>SSL</span>
           <span>Bash</span>
         </div>
-        <a href="nextcloud-guide.html" class="btn-ghost" style="margin-top: 12px; width: fit-content;"> Voir </a>
-      </div>
-
-      <!-- Projet 3: Cluster Kubernetes -->
-      <div class="proj-card reveal" style="transition-delay: 0.2s;">
-        <span class="proj-status status-wip">🚧 En construction</span>
-        <div class="proj-icon" style="background: rgba(245, 158, 11, 0.1); font-size: 28px;">☸️</div>
-        <div class="proj-name">Cluster Kubernetes</div>
-        <div class="proj-desc">
-          Déploiement d'applications conteneurisées avec Minikube.
-          <strong>Objectif : Début 2026</strong>
-        </div>
-        <div class="proj-tech">
-          <span>Kubernetes</span>
-          <span>Helm</span>
-          <span>Docker</span>
-        </div>
-      </div>
-
-      <!-- Projet 4: Stack Monitoring -->
-      <div class="proj-card reveal" style="transition-delay: 0.3s;">
-        <span class="proj-status status-wip">🎯 Planifié</span>
-        <div class="proj-icon" style="background: rgba(239, 68, 68, 0.1); font-size: 28px;">📊</div>
-        <div class="proj-name">Stack Monitoring</div>
-        <div class="proj-desc">
-          Surveillance d'infrastructure avec Prometheus et Grafana.
-          <strong>Objectif : 2026</strong>
-        </div>
-        <div class="proj-tech">
-          <span>Prometheus</span>
-          <span>Grafana</span>
-          <span>AlertManager</span>
-        </div>
-      </div>
-
-      <!-- Projet 5: Infrastructure as Code -->
-      <div class="proj-card reveal" style="transition-delay: 0.4s;">
-        <span class="proj-status status-wip">🔄 En apprentissage</span>
-        <div class="proj-icon" style="background: rgba(124, 58, 237, 0.1); font-size: 28px;">🏗️</div>
-        <div class="proj-name">Infrastructure as Code</div>
-        <div class="proj-desc">
-          Automatisation de déploiements cloud avec Terraform.
-          <strong>Niveau : Débutant</strong>
-        </div>
-        <div class="proj-tech">
-          <span>Terraform</span>
-          <span>AWS</span>
-          <span>Ansible</span>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- CV -->
+  <!-- SECTION CV -->
   <section id="cv">
     <div class="section-tag">04. CV</div>
     <div class="cv-wrapper">
@@ -1324,7 +1268,7 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- SECTION CONTACT -->
   <section id="contact">
     <div class="section-tag">05. Contact</div>
     <h2 class="section-title">Travaillons ensemble</h2>
@@ -1369,7 +1313,9 @@
   </footer>
 
   <script>
-    // Typing effect
+    // =============================================
+    // EFFET DE FRAPPE (Typing Effect)
+    // =============================================
     const phrases = [
       'Technicien Système & Réseau',
       'Alternant DevOps @ Wiconnect',
@@ -1386,39 +1332,51 @@
     function type() {
       const currentPhrase = phrases[phraseIndex];
       if (!isDeleting) {
+        // Écriture de la phrase
         typedText.textContent = currentPhrase.slice(0, ++charIndex);
         if (charIndex === currentPhrase.length) {
           isDeleting = true;
           cursor.style.opacity = 0;
-          setTimeout(type, 1500);
+          setTimeout(type, 1500); // Pause avant de supprimer
           return;
         }
       } else {
+        // Suppression de la phrase
         typedText.textContent = currentPhrase.slice(0, --charIndex);
         if (charIndex === 0) {
           isDeleting = false;
-          phraseIndex = (phraseIndex + 1) % phrases.length;
+          phraseIndex = (phraseIndex + 1) % phrases.length; // Passe à la phrase suivante
           cursor.style.opacity = 1;
-          setTimeout(type, 500);
+          setTimeout(type, 500); // Pause avant de réécrire
           return;
         }
       }
+      // Vitesse d'écriture/suppression
       setTimeout(type, isDeleting ? 50 : 100);
     }
     type();
 
-    // Scroll reveal
+    // =============================================
+    // ANIMATIONS AU DÉFILEMENT (Scroll Reveal)
+    // =============================================
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('visible');
+        if (e.isIntersecting) {
+          e.target.classList.add('visible'); // Ajoute la classe "visible" quand l'élément est visible
+        }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.12 }); // Seuil à 12% de visibilité
+
+    // Applique l'observateur à tous les éléments avec la classe "reveal"
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // Animate skill bars
+    // =============================================
+    // ANIMATION DES BARRES DE COMPÉTENCES
+    // =============================================
     const barObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
+          // Réinitialise la largeur à 0 puis anime vers la largeur originale
           e.target.querySelectorAll('.skill-bar-fill').forEach(b => {
             const w = b.style.width;
             b.style.width = '0';
@@ -1427,6 +1385,8 @@
         }
       });
     }, { threshold: 0.2 });
+
+    // Applique l'observateur aux groupes de compétences
     document.querySelectorAll('.skill-group').forEach(el => barObs.observe(el));
   </script>
 </body>
