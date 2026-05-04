@@ -44,7 +44,7 @@
       min-height: 100vh;
     }
 
-    /* Grille futuriste en arrière-plan (version sobre) */
+    /* Grille futuriste en arrière-plan */
     body::before {
       content: "";
       position: fixed;
@@ -111,6 +111,24 @@
     .nav-links a span {
       color: var(--primary);
       margin-right: 4px;
+    }
+
+    /* Nouveau lien pour les guides */
+    .nav-guides {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 8px 18px;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .nav-guides:hover {
+      background: var(--primary);
+      color: white;
     }
 
     .nav-cta {
@@ -926,6 +944,7 @@
       <li><a href="#projects"><span>03.</span>Projets</a></li>
       <li><a href="#contact"><span>04.</span>Contact</a></li>
     </ul>
+    <a href="nextcloud-guide.html" class="nav-guides">📖 Guides</a>
     <a href="#cv" class="nav-cta">📄 CV</a>
   </nav>
 
@@ -1186,6 +1205,7 @@
     <div class="section-tag">03. Projets</div>
     <h2 class="section-title">Ce que je construis</h2>
     <div class="projects-grid">
+      <!-- Projet 1: Laboratoire DevOps -->
       <div class="proj-card reveal">
         <span class="proj-status status-wip">🔄 En cours</span>
         <div class="proj-icon" style="background: rgba(37, 99, 235, 0.1); font-size: 28px;">🐳</div>
@@ -1202,7 +1222,27 @@
         </div>
       </div>
 
+      <!-- Projet 2: Guide Nextcloud -->
       <div class="proj-card reveal" style="transition-delay: 0.1s;">
+        <span class="proj-status status-done">✅ Terminée</span>
+        <div class="proj-icon" style="background: rgba(37, 99, 235, 0.1); font-size: 28px;">☁️</div>
+        <div class="proj-name">Guide Nextcloud — Déploiement complet</div>
+        <div class="proj-desc">
+          Documentation technique pour déployer une infrastructure Nextcloud avec Apache2, MariaDB, SSL auto-signé, sauvegardes NAS et accès distant.
+          <strong>Statut : Finalisé</strong>
+        </div>
+        <div class="proj-tech">
+          <span>Nextcloud</span>
+          <span>Apache2</span>
+          <span>MariaDB</span>
+          <span>SSL</span>
+          <span>Bash</span>
+        </div>
+        <a href="nextcloud-guide.html" class="btn-ghost" style="margin-top: 12px; width: fit-content;">📖 Lire le guide</a>
+      </div>
+
+      <!-- Projet 3: Cluster Kubernetes -->
+      <div class="proj-card reveal" style="transition-delay: 0.2s;">
         <span class="proj-status status-wip">🚧 En construction</span>
         <div class="proj-icon" style="background: rgba(245, 158, 11, 0.1); font-size: 28px;">☸️</div>
         <div class="proj-name">Cluster Kubernetes</div>
@@ -1217,7 +1257,8 @@
         </div>
       </div>
 
-      <div class="proj-card reveal" style="transition-delay: 0.2s;">
+      <!-- Projet 4: Stack Monitoring -->
+      <div class="proj-card reveal" style="transition-delay: 0.3s;">
         <span class="proj-status status-wip">🎯 Planifié</span>
         <div class="proj-icon" style="background: rgba(239, 68, 68, 0.1); font-size: 28px;">📊</div>
         <div class="proj-name">Stack Monitoring</div>
@@ -1232,7 +1273,8 @@
         </div>
       </div>
 
-      <div class="proj-card reveal" style="transition-delay: 0.3s;">
+      <!-- Projet 5: Infrastructure as Code -->
+      <div class="proj-card reveal" style="transition-delay: 0.4s;">
         <span class="proj-status status-wip">🔄 En apprentissage</span>
         <div class="proj-icon" style="background: rgba(124, 58, 237, 0.1); font-size: 28px;">🏗️</div>
         <div class="proj-name">Infrastructure as Code</div>
