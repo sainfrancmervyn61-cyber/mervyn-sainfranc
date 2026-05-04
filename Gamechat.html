@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameChat Overlay | Solution de Chat pour Streamers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg1: #f8f9fa;
+      --bg2: #f1f3f5;
+      --bg3: #e9ecef;
+      --line: #dee2e6;
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --secondary: #6c757d;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #212529;
+      --text2: #6c757d;
+      --text3: #adb5bd;
+      --mono: 'Space Mono', monospace;
+      --sans: 'Inter', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+    }
+
+    body {
+      overflow-x: hidden;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Header */
+    .project-header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .project-logo {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--primary);
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .project-logo i {
+      font-size: 16px;
+    }
+
+    .project-back {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 8px 18px;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .project-back:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    /* Layout */
+    .project-layout {
+      display: flex;
+      min-height: calc(100vh - 64px);
+      padding-top: 64px;
+    }
+
+    /* Sidebar */
+    .project-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--line);
+      padding: 32px 0;
+      position: sticky;
+      top: 64px;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
+      background: var(--bg);
+    }
+
+    .sidebar-section {
+      margin-bottom: 28px;
+      padding: 0 24px;
+    }
+
+    .sidebar-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 24px;
+      font-size: 13px;
+      color: var(--text2);
+      text-decoration: none;
+      transition: all 0.15s;
+      border-left: 2px solid transparent;
+    }
+
+    .sidebar-link:hover, .sidebar-link.active {
+      color: var(--primary);
+      background: rgba(37, 99, 235, 0.06);
+      border-left-color: var(--primary);
+    }
+
+    .sidebar-link .step-num {
+      font-size: 14px;
+    }
+
+    /* Main Content */
+    .project-content {
+      flex: 1;
+      padding: 48px 60px;
+      max-width: 900px;
+    }
+
+    /* Hero Section */
+    .project-hero {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(255, 255, 255, 0) 60%);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      border-radius: 16px;
+      padding: 40px 48px;
+      margin-bottom: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-hero::before {
+      content: '🎮';
+      position: absolute;
+      right: 40px;
+      top: 20px;
+      font-size: 120px;
+      opacity: 0.05;
+      color: var(--primary);
+    }
+
+    .project-tag {
+      display: inline-block;
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-family: var(--mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .project-hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .project-hero h1 i {
+      color: var(--primary);
+      margin-right: 8px;
+    }
+
+    .project-hero-desc {
+      color: var(--text2);
+      font-size: 15px;
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text3);
+    }
+
+    .meta-item i {
+      color: var(--primary);
+    }
+
+    .meta-item span {
+      color: var(--text2);
+    }
+
+    /* Sections */
+    .project-section {
+      margin-bottom: 64px;
+      scroll-margin-top: 80px;
+    }
+
+    .project-section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project-section-badge {
+      font-size: 18px;
+    }
+
+    .project-section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .project-section-subtitle {
+      font-size: 14px;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    /* Info Boxes */
+    .info-box {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 14px;
+      line-height: 1.7;
+      border-left: 3px solid;
+      background: var(--bg1);
+    }
+
+    .box-info { border-color: var(--primary); color: var(--text2); }
+    .box-warn { border-color: var(--warning); color: var(--text2); }
+    .box-success { border-color: var(--success); color: var(--text2); }
+    .box-danger { border-color: var(--danger); color: var(--text2); }
+    .info-box strong { color: var(--text); }
+
+    /* Code Blocks */
+    .code-block {
+      background: var(--bg1);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .code-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .code-label::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .code-copy {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text3);
+      background: none;
+      border: 1px solid var(--line);
+      padding: 3px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .code-copy:hover {
+      color: var(--text);
+      border-color: var(--text3);
+    }
+
+    .code-copy.copied {
+      color: var(--success);
+      border-color: var(--success);
+    }
+
+    pre {
+      padding: 20px;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.7;
+      overflow-x: auto;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .c-comment { color: var(--text3); font-style: italic; }
+    .c-cmd { color: #2563eb; }
+    .c-string { color: #16a34a; }
+    .c-flag { color: #d97706; }
+    .c-path { color: #059669; }
+    .c-section { color: var(--primary); font-weight: 700; }
+    .c-var { color: #8b5cf6; }
+
+    /* Inline Code */
+    code {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1px 6px;
+      color: #d97706;
+    }
+
+    /* Prose */
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 28px 0 16px;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 24px 0 12px;
+    }
+
+    h4 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 20px 0 10px;
+    }
+
+    p {
+      font-size: 15px;
+      color: var(--text2);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+
+    th {
+      background: var(--bg2);
+      color: var(--text);
+      font-weight: 600;
+      padding: 10px 16px;
+      text-align: left;
+      border: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      color: var(--text2);
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(241, 243, 245, 0.4);
+    }
+
+    /* Feature List */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg1);
+      border-radius: 8px;
+      border-left: 3px solid var(--primary);
+    }
+
+    .feature-icon {
+      color: var(--primary);
+      font-size: 16px;
+      margin-top: 2px;
+    }
+
+    .feature-text {
+      color: var(--text2);
+      font-size: 14px;
+    }
+
+    /* Architecture Diagram */
+    .arch-diagram {
+      background: var(--bg1);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 32px;
+      margin: 20px 0;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.9;
+      color: var(--text2);
+      overflow-x: auto;
+    }
+
+    .arch-diagram .d-title {
+      color: var(--primary);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .arch-diagram .d-node {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .arch-diagram .d-arrow { color: var(--text3); }
+    .arch-diagram .d-detail { color: var(--text3); font-style: italic; }
+
+    /* File Tree */
+    .file-tree {
+      background: var(--bg1);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text2);
+    }
+
+    .file-tree .tree-title {
+      color: var(--primary);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .file-tree .tree-item {
+      margin-left: 16px;
+    }
+
+    .file-tree .tree-folder::before {
+      content: '📁';
+      margin-right: 6px;
+      color: var(--warning);
+    }
+
+    .file-tree .tree-file::before {
+      content: '📄';
+      margin-right: 6px;
+      color: var(--success);
+    }
+
+    /* Checklist */
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg1);
+      border-radius: 8px;
+      border-left: 3px solid var(--primary);
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    .check-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      background: rgba(37, 99, 235, 0.15);
+      color: var(--primary);
+    }
+
+    /* Sensitive Data */
+    .sensitive-data {
+      background: rgba(239, 68, 68, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--danger);
+      border: 1px dashed var(--danger);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .project-sidebar { display: none; }
+      .project-content { padding: 32px 20px; }
+      .project-header { padding: 0 20px; }
+      .features-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="project-header">
+    <div class="project-logo"><i class="fas fa-gamepad"></i> GameChat Overlay</div>
+    <a href="index.html" class="project-back"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+  </header>
+
+  <div class="project-layout">
+    <nav class="project-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Sommaire</div>
+        <a href="#overview" class="sidebar-link active">
+          <span class="step-num"><i class="fas fa-info-circle"></i></span> Aperçu
+        </a>
+        <a href="#features" class="sidebar-link">
+          <span class="step-num"><i class="fas fa-star"></i></span> Fonctionnalités
+        </a>
+        <a href="#architecture" class="sidebar-link">
+          <span class="step-num"><i class="fas fa-sitemap"></i></span> Architecture
+        </a>
+        <a href="#structure" class="sidebar-link">
+          <span class="step-num"><i class="fas fa-folder-tree"></i></span> Structure
+        </a>
+        <a href="#quickstart" class="sidebar-link">
+          <span class="step-num"><i class="fas fa-rocket"></i></span> Démarrage rapide
+        </a>
+        <a href="#api" class="sidebar-link">
+          <span class="step-num"><i class="fas fa-code"></i></span> API Reference
+        </a>
+        <a href="#roadmap" class="sidebar-link">
+          <span class="step-num"><i class="fas fa-road"></i></span> Roadmap
+        </a>
+        <a href="#license" class="sidebar-link">
+          <span class="step-num"><i class="fas fa-file-contract"></i></span> Licence
+        </a>
+      </div>
+    </nav>
+
+    <main class="project-content">
+      <!-- Hero Section -->
+      <div class="project-hero">
+        <div class="project-tag">🎮 Solution de Chat pour Streamers</div>
+        <h1><i class="fas fa-comments"></i> GameChat Overlay</h1>
+        <p class="project-hero-desc">
+          Une solution complète de chat overlay pour streamers, combinant une API WebSocket temps réel sur AWS EC2 et une application Windows transparente basée sur Electron.
+        </p>
+        <div class="project-meta">
+          <div class="meta-item"><i class="fas fa-code-branch"></i> CI/CD : <span>GitHub Actions + Ansible</span></div>
+          <div class="meta-item"><i class="fab fa-node-js"></i> Backend : <span>Node.js</span></div>
+          <div class="meta-item"><i class="fab fa-electron"></i> Frontend : <span>Electron</span></div>
+          <div class="meta-item"><i class="fas fa-docker"></i> Conteneurs : <span>Docker</span></div>
+          <div class="meta-item"><i class="fas fa-shield-alt"></i> Licence : <span>MIT</span></div>
+        </div>
+      </div>
+
+      <!-- Overview Section -->
+      <div class="project-section" id="overview">
+        <div class="project-section-header">
+          <div class="project-section-badge"><i class="fas fa-info-circle"></i></div>
+          <div>
+            <div class="project-section-title">Aperçu du projet</div>
+            <div class="project-section-subtitle">Pourquoi ce projet a été créé</div>
+          </div>
+        </div>
+
+        <p>
+          GameChat Overlay est né d'un besoin simple : <strong>afficher les messages des viewers directement dans le jeu</strong> pendant un stream, sans avoir à regarder constamment le chat Twitch/YouTube.
+        </p>
+
+        <p>
+          Les solutions existantes étaient soit trop complexes, soit payantes, soit limitées à une seule plateforme. GameChat Overlay propose :
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+            <div class="feature-text">Une latence ultra-faible grâce à WebSocket</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-eye"></i></div>
+            <div class="feature-text">Une overlay toujours visible, même en plein écran</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+            <div class="feature-text">Une configuration simple et intuitive</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-expand-arrows-alt"></i></div>
+            <div class="feature-text">Une architecture extensible pour toutes les plateformes</div>
+          </div>
+        </div>
+
+        <div class="info-box box-info">
+          <strong>ℹ️ Cas d'usage :</strong>
+          <ul style="margin-top: 8px; padding-left: 20px;">
+            <li>Streamers qui veulent interagir avec leur chat sans quitter le jeu</li>
+            <li>Communautés qui organisent des événements gaming</li>
+            <li>Développeurs qui veulent intégrer un chat temps réel dans leur application</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="project-section" id="features">
+        <div class="project-section-header">
+          <div class="project-section-badge"><i class="fas fa-star"></i></div>
+          <div>
+            <div class="project-section-title">Fonctionnalités</div>
+            <div class="project-section-subtitle">Ce que propose GameChat Overlay</div>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-globe"></i></div>
+            <div class="feature-text"><strong>API WebSocket temps réel</strong> sur AWS EC2 pour une communication instantanée</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-desktop"></i></div>
+            <div class="feature-text"><strong>Overlay Windows transparente</strong> (Electron) toujours au-dessus du jeu</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+            <div class="feature-text"><strong>CI/CD automatisé</strong> via GitHub Actions + Ansible pour des déploiements sans effort</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-docker"></i></div>
+            <div class="feature-text"><strong>Docker multi-stage</strong> pour un déploiement optimisé et léger</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="feature-text"><strong>Sécurité renforcée</strong> : utilisateur non-root, UFW, prêt pour HTTPS</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-palette"></i></div>
+            <div class="feature-text"><strong>UI moderne</strong> inspirée de TikTok/Twitch pour une expérience familière</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
+            <div class="feature-text"><strong>Personnalisable</strong> : taille, position, opacité, nombre max de messages</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-plug"></i></div>
+            <div class="feature-text"><strong>Extensible</strong> : prêt pour les API Twitch/YouTube/Kick</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Architecture Section -->
+      <div class="project-section" id="architecture">
+        <div class="project-section-header">
+          <div class="project-section-badge"><i class="fas fa-sitemap"></i></div>
+          <div>
+            <div class="project-section-title">Architecture</div>
+            <div class="project-section-subtitle">Comment tout est connecté</div>
+          </div>
+        </div>
+
+        <p>
+          L'architecture de GameChat Overlay est conçue pour être <strong>modulaire, scalable et sécurisée</strong>. Voici comment les différents composants interagissent :
+        </p>
+
+        <div class="arch-diagram">
+          <div class="d-title">// Architecture GameChat Overlay</div>
+          <pre>
+GitHub (push main)
+     │
+     ▼
+┌─────────────────┐
+│ GitHub Actions   │ ← CI/CD automatisé
+│ (Workflow)       │
+└────────┬────────┘
+         │ SSH + Ansible
+         ▼
+┌───────────────────────────────────────────────────────┐
+│ AWS EC2 (Ubuntu)                                  Port 3000 │
+│ ┌─────────────────┐                                      │
+│ │ Docker Container │                                      │
+│ │ ┌─────────────┐ │                                      │
+│ │ │ Node.js API │ │ ← WebSocket + REST                  │
+│ │ │             │ │                                      │
+│ │ ├─────────────┤ │ POST /message  → Broadcast chat      │
+│ │ ├─────────────┤ │ GET  /health   → Health check         │
+│ │ └─────────────┘ │                                      │
+│ └─────────────────┘                                      │
+│       ▲                                                  │
+│       │ ws://EC2_IP:3000/ws                              │
+└───────┼────────────────────────────────────────────────┘
+        │
+        ▼
+┌───────────────────────────────────────────────────────┐
+│ Windows (Streamer PC)                                   │
+│ ┌─────────────────┐                                      │
+│ │ Electron App    │ ← Overlay transparente             │
+│ │ ┌─────────────┐ │                                      │
+│ │ │ Fenêtre     │ │ ← Toujours au-dessus du jeu        │
+│ │ │ transparente│ │                                      │
+│ │ └─────────────┘ │                                      │
+│ │ ┌─────────────┐ │                                      │
+│ │ │ Chat        │ │ ← Messages en temps réel           │
+│ │ │ en direct   │ │                                      │
+│ │ └─────────────┘ │                                      │
+│ └─────────────────┘                                      │
+└───────────────────────────────────────────────────────┘</pre>
+        </div>
+
+        <p>
+          <strong>Flux de données :</strong>
+        </p>
+        <div class="checklist">
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+            <div><strong>1.</strong> Le streamer pousse du code sur la branche <code>main</code> de GitHub</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+            <div><strong>2.</strong> GitHub Actions déclenche le workflow de déploiement</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+            <div><strong>3.</strong> Ansible se connecte en SSH à l'instance EC2 et déploie la nouvelle version</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+            <div><strong>4.</strong> L'API Node.js écoute sur le port 3000 pour les connexions WebSocket</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+            <div><strong>5.</strong> L'overlay Electron se connecte à l'API via WebSocket</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+            <div><strong>6.</strong> Les messages sont affichés en temps réel sur l'overlay</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Structure Section -->
+      <div class="project-section" id="structure">
+        <div class="project-section-header">
+          <div class="project-section-badge"><i class="fas fa-folder-tree"></i></div>
+          <div>
+            <div class="project-section-title">Structure du projet</div>
+            <div class="project-section-subtitle">Organisation des fichiers</div>
+          </div>
+        </div>
+
+        <p>
+          Le projet est organisé en plusieurs dossiers principaux, chacun avec un rôle spécifique :
+        </p>
+
+        <div class="file-tree">
+          <div class="tree-title">// gamechat-overlay/</div>
+          <div class="tree-item tree-folder">api/ <span class="c-comment"># Backend WebSocket (Node.js)</span></div>
+          <div class="tree-item tree-folder">├── src/</div>
+          <div class="tree-item tree-file">│   └── server.js <span class="c-comment"># Point d'entrée de l'API</span></div>
+          <div class="tree-item tree-file">├── Dockerfile <span class="c-comment"># Configuration Docker</span></div>
+          <div class="tree-item tree-file">├── .dockerignore <span class="c-comment"># Fichiers à exclure du build</span></div>
+          <div class="tree-item tree-file">└── package.json <span class="c-comment"># Dépendances Node.js</span></div>
+
+          <div class="tree-item tree-folder">overlay/ <span class="c-comment"># Client Windows (Electron)</span></div>
+          <div class="tree-item tree-file">├── main.js <span class="c-comment"># Processus principal Electron</span></div>
+          <div class="tree-item tree-file">├── index.html <span class="c-comment"># Interface de l'overlay</span></div>
+          <div class="tree-item tree-file">├── renderer.js <span class="c-comment"># Logique du rendu</span></div>
+          <div class="tree-item tree-file">└── package.json <span class="c-comment"># Dépendances Electron</span></div>
+
+          <div class="tree-item tree-folder">ansible/ <span class="c-comment"># Déploiement automatisé</span></div>
+          <div class="tree-item tree-file">├── ansible.cfg <span class="c-comment"># Configuration Ansible</span></div>
+          <div class="tree-item tree-folder">├── inventory/</div>
+          <div class="tree-item tree-file">│   └── hosts.ini <span class="c-comment"># Inventaire des serveurs</span></div>
+          <div class="tree-item tree-folder">└── playbooks/</div>
+          <div class="tree-item tree-file">    └── deploy.yml <span class="c-comment"># Playbook de déploiement</span></div>
+
+          <div class="tree-item tree-folder">.github/ <span class="c-comment"># Configuration GitHub</span></div>
+          <div class="tree-item tree-folder">└── workflows/</div>
+          <div class="tree-item tree-file">    └── deploy.yml <span class="c-comment"># Workflow CI/CD</span></div>
+
+          <div class="tree-item tree-file">README.md <span class="c-comment"># Documentation</span></div>
+          <div class="tree-item tree-file">.gitignore <span class="c-comment"># Fichiers à exclure de Git</span></div>
+        </div>
+
+        <div class="info-box box-info">
+          <strong>ℹ️ Bonnes pratiques :</strong>
+          <ul style="margin-top: 8px; padding-left: 20px;">
+            <li>Chaque composant est isolé dans son propre dossier</li>
+            <li>Les configurations Docker et Ansible sont séparées du code source</li>
+            <li>Les secrets ne sont jamais commités dans Git (utilisation de GitHub Secrets)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Quick Start Section -->
+      <div class="project-section" id="quickstart">
+        <div class="project-section-header">
+          <div class="project-section-badge"><i class="fas fa-rocket"></i></div>
+          <div>
+            <div class="project-section-title">Démarrage rapide</div>
+            <div class="project-section-subtitle">Comment déployer GameChat Overlay en 5 minutes</div>
+          </div>
+        </div>
+
+        <h3>1. Prérequis</h3>
+        <div class="checklist">
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+            <div><strong>Node.js 20+</strong> installé sur votre machine locale (pour l'overlay)</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+            <div>Une <strong>instance AWS EC2</strong> avec Ubuntu 22.04</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+            <div><strong>Ansible</strong> installé sur votre PC (pour le déploiement)</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+            <div>Un <strong>compte GitHub</strong> avec accès au dépôt</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+            <div>Une <strong>clé SSH</strong> configurée sur votre EC2</div>
+          </div>
+        </div>
+
+        <h3>2. Déployer l'API sur EC2</h3>
+        <p>
+          Clonez le dépôt et configurez l'inventaire Ansible :
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Cloner le dépôt</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">git clone</span> https://github.com/votre-utilisateur/gamechat-overlay.git
+<span class="c-cmd">cd</span> gamechat-overlay</pre>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Configurer l'inventaire Ansible</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">nano</span> ansible/inventory/hosts.ini</pre>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>ansible/inventory/hosts.ini</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre>[ec2]
+<span class="sensitive-data">YOUR_EC2_PUBLIC_IP</span> ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/<span class="sensitive-data">YOUR_KEY.pem</span>
+
+[ec2:vars]
+repo_url=https://github.com/votre-utilisateur/gamechat-overlay.git
+branch=main
+api_port=3000</pre>
+        </div>
+
+        <p>
+          Remplacez <span class="sensitive-data">YOUR_EC2_PUBLIC_IP</span> par l'IP publique de votre instance EC2 et <span class="sensitive-data">YOUR_KEY.pem</span> par votre clé SSH privée.
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Lancer le déploiement</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">ansible-playbook</span> ansible/playbooks/deploy.yml</pre>
+        </div>
+
+        <div class="info-box box-success">
+          <strong>✅ Résultat :</strong> Votre API est maintenant déployée sur EC2 et accessible sur <code>ws://<span class="sensitive-data">YOUR_EC2_PUBLIC_IP</span>:3000/ws</code>
+        </div>
+
+        <h3>3. Tester l'API</h3>
+        <p>
+          Vérifiez que l'API fonctionne correctement :
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Tester le health check</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">curl</span> http://<span class="sensitive-data">YOUR_EC2_PUBLIC_IP</span>:3000/health</pre>
+        </div>
+
+        <p>
+          Vous devriez recevoir une réponse JSON comme :
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>Réponse attendue</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre>{
+  "status": "healthy",
+  "timestamp": "2024-05-20T12:00:00Z",
+  "uptime": 123.456,
+  "clients": 0
+}</pre>
+        </div>
+
+        <h3>4. Envoyer un message test</h3>
+        <p>
+          Testez l'envoi d'un message via l'API REST :
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Envoyer un message</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">curl</span> <span class="c-flag">-X POST</span> http://<span class="sensitive-data">YOUR_EC2_PUBLIC_IP</span>:3000/message \
+  <span class="c-flag">-H</span> <span class="c-string">"Content-Type: application/json"</span> \
+  <span class="c-flag">-d</span> <span class="c-string">'{
+    "username": "TestUser",
+    "content": "Hello depuis le chat !",
+    "platform": "twitch",
+    "color": "#9b59b6"
+  }'</span></pre>
+        </div>
+
+        <h3>5. Installer l'overlay Windows</h3>
+        <p>
+          Passez dans le dossier <code>overlay</code> et installez les dépendances :
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Installer l'overlay</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">cd</span> overlay
+<span class="c-cmd">npm install</span>
+<span class="c-cmd">npm start</span></pre>
+        </div>
+
+        <div class="info-box box-info">
+          <strong>ℹ️ Configuration :</strong>
+          <ul style="margin-top: 8px; padding-left: 20px;">
+            <li>Dans l'interface de l'overlay, allez dans <strong>Paramètres (⚙️)</strong></li>
+            <li>Renseignez l'<strong>IP de votre EC2</strong> (ex: <span class="sensitive-data">123.45.67.89</span>)</li>
+            <li>Ajustez la <strong>taille</strong>, <strong>position</strong> et <strong>opacité</strong> selon vos préférences</li>
+            <li>Choisissez un <strong>thème</strong> (clair/sombre)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- API Reference Section -->
+      <div class="project-section" id="api">
+        <div class="project-section-header">
+          <div class="project-section-badge"><i class="fas fa-code"></i></div>
+          <div>
+            <div class="project-section-title">API Reference</div>
+            <div class="project-section-subtitle">Endpoints disponibles</div>
+          </div>
+        </div>
+
+        <p>
+          L'API de GameChat Overlay propose plusieurs endpoints pour interagir avec le système :
+        </p>
+
+        <table>
+          <tr>
+            <th>Méthode</th>
+            <th>Route</th>
+            <th>Description</th>
+            <th>Exemple de requête</th>
+          </tr>
+          <tr>
+            <td>GET</td>
+            <td>/health</td>
+            <td>Vérifie que l'API est opérationnelle</td>
+            <td><code>curl http://IP:3000/health</code></td>
+          </tr>
+          <tr>
+            <td>GET</td>
+            <td>/status</td>
+            <td>Retourne le statut détaillé + liste des clients connectés</td>
+            <td><code>curl http://IP:3000/status</code></td>
+          </tr>
+          <tr>
+            <td>POST</td>
+            <td>/message</td>
+            <td>Envoyer un message à tous les overlays connectés</td>
+            <td><code>curl -X POST ... (voir ci-dessus)</code></td>
+          </tr>
+          <tr>
+            <td>POST</td>
+            <td>/event</td>
+            <td>Envoyer un événement (donation, sub, etc.)</td>
+            <td><code>curl -X POST ... -d '{"type":"sub",...}'</code></td>
+          </tr>
+          <tr>
+            <td>WS</td>
+            <td>/ws</td>
+            <td>Connexion WebSocket pour recevoir les messages en temps réel</td>
+            <td><code>new WebSocket('ws://IP:3000/ws')</code></td>
+          </tr>
+        </table>
+
+        <h3>Format des messages</h3>
+        <p>
+          Les messages envoyés via l'API doivent suivre ce format JSON :
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>JSON — Format d'un message</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre>{
+  <span class="c-var">"username"</span>: <span class="c-string">"NomUtilisateur"</span>,    <span class="c-comment">// Nom de l'utilisateur</span>
+  <span class="c-var">"content"</span>: <span class="c-string">"Message ici"</span>,       <span class="c-comment">// Contenu du message</span>
+  <span class="c-var">"platform"</span>: <span class="c-string">"twitch"</span>,        <span class="c-comment">// Plateforme (twitch/youtube/kick)</span>
+  <span class="c-var">"color"</span>: <span class="c-string">"#9b59b6"</span>,         <span class="c-comment">// Couleur du message (hex)</span>
+  <span class="c-var">"emote"</span>: <span class="c-string">"😊"</span>,            <span class="c-comment">// Émote optionnel</span>
+  <span class="c-var">"isMod"</span>: <span class="c-flag">false</span>,            <span class="c-comment">// L'utilisateur est modérateur ?</span>
+  <span class="c-var">"isSub"</span>: <span class="c-flag">true</span>             <span class="c-comment">// L'utilisateur est abonné ?</span>
+}</pre>
+        </div>
+
+        <h3>Format des événements</h3>
+        <p>
+          Les événements (dons, abonnements, etc.) suivent un format similaire :
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>JSON — Format d'un événement</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre>{
+  <span class="c-var">"type"</span>: <span class="c-string">"sub"</span>,                <span class="c-comment">// Type d'événement (sub/donation/follow)</span>
+  <span class="c-var">"username"</span>: <span class="c-string">"SuperViewer"</span>,
+  <span class="c-var">"message"</span>: <span class="c-string">"Merci pour le sub !"</span>,
+  <span class="c-var">"amount"</span>: <span class="c-flag">5</span>,                <span class="c-comment">// Montant (pour les dons)</span>
+  <span class="c-var">"month"</span>: <span class="c-flag">3</span>,                 <span class="c-comment">// Durée (pour les subs)</span>
+  <span class="c-var">"color"</span>: <span class="c-string">"#ff6b6b"</span>
+}</pre>
+        </div>
+
+        <h3>WebSocket</h3>
+        <p>
+          Pour recevoir les messages en temps réel, connectez-vous au WebSocket :
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>JavaScript — Exemple de connexion WebSocket</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-comment">// Connexion au WebSocket</span>
+<span class="c-var">const socket</span> = <span class="c-cmd">new WebSocket</span>(<span class="c-string">'ws://YOUR_EC2_IP:3000/ws'</span>);
+
+<span class="c-comment">// Écouter les messages entrants</span>
+socket.<span class="c-cmd">onmessage</span> = (<span class="c-var">event</span>) => {
+  <span class="c-var">const message</span> = JSON.<span class="c-cmd">parse</span>(event.data);
+  console.<span class="c-cmd">log</span>(<span class="c-string">'Nouveau message :'</span>, message);
+};
+
+<span class="c-comment">// Écouter les erreurs</span>
+socket.<span class="c-cmd">onerror</span> = (<span class="c-var">error</span>) => {
+  console.<span class="c-cmd">error</span>(<span class="c-string">'Erreur WebSocket :'</span>, error);
+};</pre>
+        </div>
+      </div>
+
+      <!-- Roadmap Section -->
+      <div class="project-section" id="roadmap">
+        <div class="project-section-header">
+          <div class="project-section-badge"><i class="fas fa-road"></i></div>
+          <div>
+            <div class="project-section-title">Roadmap</div>
+            <div class="project-section-subtitle">Fonctionnalités à venir</div>
+          </div>
+        </div>
+
+        <p>
+          Voici les fonctionnalités prévues pour les prochaines versions de GameChat Overlay :
+        </p>
+
+        <div class="checklist">
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-circle"></i></div>
+            <div><strong>Intégration Twitch EventSub</strong> — Recevoir les événements Twitch en temps réel</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-circle"></i></div>
+            <div><strong>Intégration YouTube Live Chat</strong> — Afficher les messages YouTube</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-circle"></i></div>
+            <div><strong>Intégration Kick</strong> — Support de la plateforme Kick</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-circle"></i></div>
+            <div><strong>Émotes Twitch dans l'overlay</strong> — Affichage des émotes personnalisées</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-circle"></i></div>
+            <div><strong>TTS (Text-To-Speech)</strong> — Lecture vocale des messages</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-circle"></i></div>
+            <div><strong>Thèmes personnalisables</strong> — Personnalisation avancée de l'UI</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-circle"></i></div>
+            <div><strong>Dashboard admin web</strong> — Interface de gestion en ligne</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-circle"></i></div>
+            <div><strong>Authentification API (JWT)</strong> — Sécurisation des endpoints</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fas fa-circle"></i></div>
+            <div><strong>Support multi-streams</strong> — Gérer plusieurs streams simultanément</div>
+          </div>
+        </div>
+
+        <div class="info-box box-info">
+          <strong>ℹ️ Contribuer :</strong> Si vous souhaitez contribuer à une de ces fonctionnalités, n'hésitez pas à ouvrir une <strong>Pull Request</strong> ou un <strong>Issue</strong> sur le dépôt GitHub !
+        </div>
+      </div>
+
+      <!-- License Section -->
+      <div class="project-section" id="license">
+        <div class="project-section-header">
+          <div class="project-section-badge"><i class="fas fa-file-contract"></i></div>
+          <div>
+            <div class="project-section-title">Licence</div>
+            <div class="project-section-subtitle">Informations légales</div>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>MIT License</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre>MIT License
+
+Copyright (c) 2024 GameChat Overlay
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</pre>
+        </div>
+
+        <p style="margin-top: 20px;">
+          <strong>© 2024 GameChat Overlay</strong> — Une solution open-source pour les streamers.
+        </p>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.innerText || pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✓ Copié !';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copier';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    const sections = document.querySelectorAll('.project-section[id]');
+    const links = document.querySelectorAll('.sidebar-link');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sidebar-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-100px 0px -50% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
