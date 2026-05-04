@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guide Nextcloud — Installation complète | Mervyn Sainfranc</title>
+  <title>Guide Nextcloud — Déploiement Complet | Mervyn Sainfranc</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -15,6 +15,7 @@
       --line: #dee2e6;
       --primary: #2563eb;
       --primary-light: #3b82f6;
+      --secondary: #6c757d;
       --success: #10b981;
       --warning: #f59e0b;
       --danger: #ef4444;
@@ -32,90 +33,98 @@
     }
 
     html {
+      scroll-behavior: smooth;
       background: var(--bg);
       color: var(--text);
       font-family: var(--sans);
-      scroll-behavior: smooth;
     }
 
     body {
       overflow-x: hidden;
+      min-height: 100vh;
+      line-height: 1.6;
     }
 
-    /* TOP BAR */
-    .topbar {
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .guide-header {
       position: sticky;
       top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
       background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
       padding: 0 40px;
-      height: 60px;
+      height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .topbar-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .topbar-logo {
+    .guide-logo {
       font-family: var(--mono);
       font-size: 13px;
       color: var(--primary);
+      letter-spacing: 0.1em;
     }
 
-    .topbar-sep {
-      color: var(--text3);
-    }
-
-    .topbar-title {
-      font-size: 14px;
+    .guide-logo span {
       color: var(--text2);
-      font-weight: 500;
     }
 
-    .topbar-back {
+    .guide-back {
       font-family: var(--mono);
       font-size: 12px;
-      color: var(--primary);
-      text-decoration: none;
+      padding: 8px 18px;
       border: 1px solid var(--primary);
-      padding: 6px 14px;
-      border-radius: 6px;
+      color: var(--primary);
+      background: transparent;
+      border-radius: 4px;
+      text-decoration: none;
       transition: all 0.2s;
     }
 
-    .topbar-back:hover {
+    .guide-back:hover {
       background: var(--primary);
       color: white;
     }
 
-    /* LAYOUT */
-    .layout {
+    .guide-layout {
       display: flex;
-      min-height: calc(100vh - 60px);
+      min-height: calc(100vh - 64px);
+      padding-top: 64px;
     }
 
-    /* SIDEBAR */
-    .sidebar {
+    .guide-sidebar {
       width: 280px;
       flex-shrink: 0;
       border-right: 1px solid var(--line);
       padding: 32px 0;
       position: sticky;
-      top: 60px;
-      height: calc(100vh - 60px);
+      top: 64px;
+      height: calc(100vh - 64px);
       overflow-y: auto;
       background: var(--bg);
     }
 
     .sidebar-section {
       margin-bottom: 28px;
+      padding: 0 24px;
     }
 
     .sidebar-label {
@@ -124,7 +133,6 @@
       color: var(--text3);
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      padding: 0 24px;
       margin-bottom: 8px;
     }
 
@@ -160,16 +168,13 @@
       color: var(--text3);
     }
 
-    /* CONTENT */
-    .content {
+    .guide-content {
       flex: 1;
       padding: 48px 60px;
       max-width: 900px;
-      background: var(--bg);
     }
 
-    /* HERO DOC */
-    .doc-hero {
+    .guide-hero {
       background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(255, 255, 255, 0) 60%);
       border: 1px solid rgba(37, 99, 235, 0.2);
       border-radius: 16px;
@@ -179,7 +184,7 @@
       overflow: hidden;
     }
 
-    .doc-hero::before {
+    .guide-hero::before {
       content: '☁';
       position: absolute;
       right: 40px;
@@ -189,7 +194,7 @@
       color: var(--primary);
     }
 
-    .doc-hero-tag {
+    .guide-tag {
       font-family: var(--mono);
       font-size: 11px;
       color: var(--primary);
@@ -198,7 +203,7 @@
       margin-bottom: 12px;
     }
 
-    .doc-hero h1 {
+    .guide-hero h1 {
       font-size: 36px;
       font-weight: 700;
       line-height: 1.15;
@@ -206,21 +211,20 @@
       color: var(--text);
     }
 
-    .doc-hero-desc {
+    .guide-hero-desc {
       color: var(--text2);
       font-size: 15px;
       line-height: 1.75;
-      max-width: 560px;
       margin-bottom: 28px;
     }
 
-    .doc-meta {
+    .guide-meta {
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
     }
 
-    .doc-meta-item {
+    .guide-meta-item {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -229,49 +233,16 @@
       color: var(--text3);
     }
 
-    .doc-meta-item span {
+    .guide-meta-item span {
       color: var(--text2);
     }
 
-    /* INFO BOXES */
-    .box {
-      border-radius: 8px;
-      padding: 16px 20px;
-      margin: 20px 0;
-      font-size: 14px;
-      line-height: 1.7;
-      border-left: 3px solid;
-      background: var(--bg1);
-    }
-
-    .box-info {
-      border-color: var(--primary);
-      color: var(--text2);
-    }
-    .box-warn {
-      border-color: var(--warning);
-      color: var(--text2);
-    }
-    .box-danger {
-      border-color: var(--danger);
-      color: var(--text2);
-    }
-    .box-success {
-      border-color: var(--success);
-      color: var(--text2);
-    }
-
-    .box strong {
-      color: var(--text);
-    }
-
-    /* STEP SECTIONS */
-    .step-section {
+    .guide-section {
       margin-bottom: 64px;
       scroll-margin-top: 80px;
     }
 
-    .step-header {
+    .guide-section-header {
       display: flex;
       align-items: center;
       gap: 16px;
@@ -280,7 +251,7 @@
       border-bottom: 1px solid var(--line);
     }
 
-    .step-badge {
+    .guide-section-badge {
       font-family: var(--mono);
       font-size: 11px;
       font-weight: 700;
@@ -295,19 +266,34 @@
       flex-shrink: 0;
     }
 
-    .step-title {
+    .guide-section-title {
       font-size: 22px;
       font-weight: 700;
       color: var(--text);
     }
 
-    .step-subtitle {
+    .guide-section-subtitle {
       font-size: 14px;
       color: var(--text2);
       margin-top: 2px;
     }
 
-    /* CODE BLOCKS */
+    .info-box {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 14px;
+      line-height: 1.7;
+      border-left: 3px solid;
+      background: var(--bg1);
+    }
+
+    .box-info { border-color: var(--primary); color: var(--text2); }
+    .box-warn { border-color: var(--warning); color: var(--text2); }
+    .box-success { border-color: var(--success); color: var(--text2); }
+    .box-danger { border-color: var(--danger); color: var(--text2); }
+    .info-box strong { color: var(--text); }
+
     .code-block {
       background: var(--bg1);
       border: 1px solid var(--line);
@@ -334,7 +320,8 @@
       gap: 8px;
     }
 
-    .code-label .dot {
+    .code-label::before {
+      content: '';
       width: 8px;
       height: 8px;
       border-radius: 50%;
@@ -373,7 +360,6 @@
       background: var(--bg);
     }
 
-    /* Syntax Highlighting */
     .c-comment { color: var(--text3); font-style: italic; }
     .c-cmd { color: #2563eb; }
     .c-string { color: #16a34a; }
@@ -383,7 +369,6 @@
     .c-var { color: #8b5cf6; }
     .c-ok { color: var(--success); }
 
-    /* INLINE CODE */
     code {
       font-family: var(--mono);
       font-size: 12.5px;
@@ -394,7 +379,27 @@
       color: #d97706;
     }
 
-    /* PROSE */
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 28px 0 16px;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 24px 0 12px;
+    }
+
+    h4 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 20px 0 10px;
+    }
+
     p {
       font-size: 15px;
       color: var(--text2);
@@ -402,14 +407,35 @@
       margin-bottom: 16px;
     }
 
-    h3 {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 28px 0 12px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
     }
 
-    /* CHECKLIST */
+    th {
+      background: var(--bg2);
+      color: var(--text);
+      font-weight: 600;
+      padding: 10px 16px;
+      text-align: left;
+      border: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      color: var(--text2);
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(241, 243, 245, 0.4);
+    }
+
     .checklist {
       display: flex;
       flex-direction: column;
@@ -445,12 +471,12 @@
       background: rgba(16, 185, 129, 0.15);
       color: var(--success);
     }
+
     .check-icon.warn {
       background: rgba(245, 158, 11, 0.15);
       color: var(--warning);
     }
 
-    /* INFRA DIAGRAM */
     .infra-diagram {
       background: var(--bg1);
       border: 1px solid var(--line);
@@ -461,6 +487,7 @@
       font-size: 13px;
       line-height: 1.9;
       color: var(--text2);
+      overflow-x: auto;
     }
 
     .infra-diagram .d-title {
@@ -479,293 +506,924 @@
     .infra-diagram .d-arrow { color: var(--text3); }
     .infra-diagram .d-detail { color: var(--text3); font-style: italic; }
 
-    /* TABLE */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 16px 0;
-      font-size: 13px;
-    }
-
-    th {
-      background: var(--bg2);
-      color: var(--text);
-      font-weight: 600;
-      padding: 10px 16px;
-      text-align: left;
-      border: 1px solid var(--line);
+    .sensitive-data {
+      background: rgba(239, 68, 68, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
       font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.05em;
+      font-size: 12px;
+      color: var(--danger);
+      border: 1px dashed var(--danger);
     }
 
-    td {
-      padding: 10px 16px;
-      border: 1px solid var(--line);
-      color: var(--text2);
-    }
-
-    tr:nth-child(even) td {
-      background: rgba(241, 243, 245, 0.4);
-    }
-
-    /* PROGRESS TRACKER */
-    .progress-tracker {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-
-    .progress-step {
-      font-family: var(--mono);
-      font-size: 10px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      color: var(--text3);
-      text-decoration: none;
-      transition: all 0.15s;
-    }
-
-    .progress-step:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    /* RESPONSIVE */
     @media (max-width: 900px) {
-      .sidebar { display: none; }
-      .content { padding: 32px 20px; }
-      .topbar { padding: 0 20px; }
+      .guide-sidebar { display: none; }
+      .guide-content { padding: 32px 20px; }
+      .guide-header { padding: 0 20px; }
     }
   </style>
 </head>
 <body>
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <div class="topbar-left">
-      <span class="topbar-logo">~/mervyn.sainfranc</span>
-      <span class="topbar-sep">/</span>
-      <span class="topbar-title">Guide Nextcloud — Déploiement Infrastructure Cloud</span>
-    </div>
-    <a href="index.html" class="topbar-back">← Retour au portfolio</a>
-  </div>
+  <header class="guide-header">
+    <div class="guide-logo">~/mervyn<span>.sainfranc</span></div>
+    <a href="index.html" class="guide-back">← Retour au portfolio</a>
+  </header>
 
-  <div class="layout">
-    <!-- SIDEBAR -->
-    <nav class="sidebar">
+  <div class="guide-layout">
+    <nav class="guide-sidebar">
       <div class="sidebar-section">
-        <div class="sidebar-label">Vue d'ensemble</div>
-        <a href="#intro" class="sidebar-link active">
-          <span class="step-num">📋</span> Introduction
-        </a>
-        <a href="#archi" class="sidebar-link">
+        <div class="sidebar-label">Sommaire</div>
+        <a href="#architecture" class="sidebar-link active">
           <span class="step-num">🏗</span> Architecture
         </a>
-        <a href="#prereqs" class="sidebar-link">
-          <span class="step-num">✅</span> Prérequis
+        <a href="#adressage" class="sidebar-link">
+          <span class="step-num">🌐</span> Plan d'adressage
         </a>
-      </div>
-
-      <div class="sidebar-section">
-        <div class="sidebar-label">Installation serveur</div>
-        <a href="#step1" class="sidebar-link">
-          <span class="step-num">01</span> Préparation OS
+        <a href="#identifiants" class="sidebar-link">
+          <span class="step-num">🔑</span> Identifiants
         </a>
-        <a href="#step2" class="sidebar-link">
-          <span class="step-num">02</span> Apache2 & PHP 8.2
+        <a href="#installation" class="sidebar-link">
+          <span class="step-num">🐳</span> Installation Docker
         </a>
-        <a href="#step3" class="sidebar-link">
-          <span class="step-num">03</span> MariaDB
+        <a href="#vpn" class="sidebar-link">
+          <span class="step-num">🔒</span> VPN WireGuard
         </a>
-        <a href="#step4" class="sidebar-link">
-          <span class="step-num">04</span> Nextcloud
+        <a href="#nas" class="sidebar-link">
+          <span class="step-num">💾</span> Configuration NAS
         </a>
-        <a href="#step5" class="sidebar-link">
-          <span class="step-num">05</span> VirtualHost Apache
+        <a href="#firewall" class="sidebar-link">
+          <span class="step-num">🛡️</span> Firewall UFW
         </a>
-        <a href="#step6" class="sidebar-link">
-          <span class="step-num">06</span> SSL Auto-signé
-        </a>
-        <a href="#step7" class="sidebar-link">
-          <span class="step-num">07</span> Config Nextcloud
-        </a>
-      </div>
-
-      <div class="sidebar-section">
-        <div class="sidebar-label">Post-installation</div>
-        <a href="#step8" class="sidebar-link">
-          <span class="step-num">08</span> Sauvegarde NAS
-        </a>
-        <a href="#step9" class="sidebar-link">
-          <span class="step-num">09</span> Firewall & NAT
-        </a>
-        <a href="#step10" class="sidebar-link">
-          <span class="step-num">10</span> Apps (Talk, Office…)
-        </a>
-      </div>
-
-      <div class="sidebar-section">
-        <div class="sidebar-label">Documentation</div>
-        <a href="#doc-user" class="sidebar-link">
-          <span class="step-num">👤</span> Guide utilisateur
-        </a>
-        <a href="#doc-client" class="sidebar-link">
-          <span class="step-num">💻</span> Client desktop
+        <a href="#maintenance" class="sidebar-link">
+          <span class="step-num">🔧</span> Maintenance
         </a>
       </div>
     </nav>
 
-    <!-- CONTENT -->
-    <main class="content">
-      <!-- HERO DOC -->
-      <div class="doc-hero" id="intro">
-        <div class="doc-hero-tag">📘 Documentation technique · Projet BTS</div>
-        <h1>Déploiement Nextcloud<br>Infrastructure Cloud Privée</h1>
-        <p class="doc-hero-desc">
-          Guide complet de déploiement d'une infrastructure de stockage et de collaboration sécurisée, avec certificat SSL auto-signé, sauvegarde sur NAS et accès distant via FQDN.
+    <main class="guide-content">
+      <div class="guide-hero">
+        <div class="guide-tag">📘 Documentation Technique</div>
+        <h1>Guide Nextcloud — Déploiement Complet</h1>
+        <p class="guide-hero-desc">
+          Documentation complète pour déployer une infrastructure Nextcloud avec Docker, Nginx, MariaDB, VPN WireGuard et intégration NAS Synology.
         </p>
-        <div class="doc-meta">
-          <div class="doc-meta-item">🖥️ OS : <span>Ubuntu 22.04 LTS</span></div>
-          <div class="doc-meta-item">☁️ Nextcloud : <span>30.x</span></div>
-          <div class="doc-meta-item">🐘 PHP : <span>8.2</span></div>
-          <div class="doc-meta-item">🔒 SSL : <span>Auto-signé (OpenSSL)</span></div>
-          <div class="doc-meta-item">🗄️ BDD : <span>MariaDB 10.x</span></div>
+        <div class="guide-meta">
+          <div class="guide-meta-item">📦 Version : <span>Nextcloud 28</span></div>
+          <div class="guide-meta-item">🐳 Conteneurs : <span>Docker</span></div>
+          <div class="guide-meta-item">🌐 Serveur Web : <span>Nginx</span></div>
+          <div class="guide-meta-item">🗄️ Base de données : <span>MariaDB 10.6</span></div>
         </div>
       </div>
 
-      <!-- PROGRESS LINKS -->
-      <div class="progress-tracker">
-        <a href="#step1" class="progress-step">01 · OS</a>
-        <a href="#step2" class="progress-step">02 · Apache+PHP</a>
-        <a href="#step3" class="progress-step">03 · MariaDB</a>
-        <a href="#step4" class="progress-step">04 · Nextcloud</a>
-        <a href="#step5" class="progress-step">05 · VirtualHost</a>
-        <a href="#step6" class="progress-step">06 · SSL</a>
-        <a href="#step7" class="progress-step">07 · Config</a>
-        <a href="#step8" class="progress-step">08 · Backup</a>
-        <a href="#step9" class="progress-step">09 · Firewall</a>
-        <a href="#step10" class="progress-step">10 · Apps</a>
-      </div>
-
-      <!-- Contenu du guide (inchangé, mais avec le nouveau thème clair) -->
-      <!-- ARCHITECTURE -->
-      <div class="step-section" id="archi">
-        <div class="step-header">
-          <div class="step-badge">🏗</div>
+      <!-- Section A: Architecture -->
+      <div class="guide-section" id="architecture">
+        <div class="guide-section-header">
+          <div class="guide-section-badge">🏗</div>
           <div>
-            <div class="step-title">Architecture de l'infrastructure</div>
-            <div class="step-subtitle">Schéma réseau et composants déployés</div>
+            <div class="guide-section-title">A. Schéma d'architecture réseau</div>
+            <div class="guide-section-subtitle">Représentation logique de l'infrastructure Nextcloud</div>
           </div>
         </div>
 
-        <div class="infra-diagram">
-          <div class="d-title">// Schéma réseau simplifié</div>
-          <pre>
-  Internet (FQDN: cloud.mondomaine.lan)
-       │
-       ▼
-  ┌─────────────────┐
-  │   FIREWALL      │  ← Filtrage ports (80, 443, VPN)
-  │  (Stormshield)  │    NAT / PAT → 192.168.1.10
-  └────────┬────────┘
-           │
-  ┌────────┴────────────────────────────────┐
-  │              SWITCH MANAGÉ              │
-  │         VLAN 10 : Serveurs              │
-  └──────┬──────────────────────┬───────────┘
-         │                      │
-  ┌──────┴──────┐        ┌──────┴──────┐
-  │  SERVEUR    │        │     NAS     │
-  │ NEXTCLOUD   │◄──────►│  Sauvegardes│
-  │ 192.168.1.10│ rsync  │ 192.168.1.20│
-  │ Ubuntu 22.04│        │             │
-  └─────────────┘        └─────────────┘
-         │
-  ┌──────┴──────────────────────────┐
-  │         STACK APPLICATIVE       │
-  │  Apache2 · PHP 8.2 · MariaDB    │
-  │  Nextcloud 30 · SSL auto-signé  │
-  └─────────────────────────────────┘
-          </pre>
+        <p>
+          Le schéma ci-dessous représente l'architecture réseau logique de l'infrastructure Nextcloud.
+          <strong>Fichier source disponible</strong> : <code>gitlab.wiconnect.fr/infra/nextcloud</code>
+        </p>
+
+        <div class="info-box box-info">
+          <strong>ℹ️ Note :</strong> Ce schéma doit être maintenu à jour à chaque modification de l'infrastructure.
         </div>
 
+        <div class="infra-diagram">
+          <div class="d-title">// Schéma réseau Nextcloud</div>
+          <pre>
+INTERNET
+    │
+    │ (Port 443 HTTPS / 80 HTTP / 443 UDP VPN)
+    │
++---+-----------------------------------+
+│ FIREWALL STORMSHIELD                 │
+│ IP WAN : <span class="sensitive-data">x.x.x.x</span> (IP publique)      │
+│ IP LAN : <span class="sensitive-data">192.168.10.1</span>               │
+│ - NAT : 443 → <span class="sensitive-data">192.168.10.10</span>:8007    │
+│ - VPN SSL : <span class="sensitive-data">10.8.0.0/24</span>            │
+│ - Règles de filtrage                │
++---+-----------------------------------+
+    │
+    │ LAN <span class="sensitive-data">192.168.10.0/24</span>
+    │
++---+-----------------------------------+
+│ SWITCH MANAGEABLE                    │
++---+---+---+---------------------------+
+    │   │   │
+    │   │   +---- Poste Admin (<span class="sensitive-data">192.168.10.50</span>)
+    │   │
+    │   +-----+
+    │         │
++------+------+------+
+| Serveur          | NAS          |
+| Nextcloud        | Synology     |
+| <span class="sensitive-data">192.168.10.10</span>    | <span class="sensitive-data">192.168.10.20</span>|
+| (Docker, Nginx,  | (Stockage)   |
+|  MariaDB, Redis) |              |
++------+------+------+
+    │
+    │ (HTTPS:8007, WireGuard:51820)
+    │
+ VPN Clients (<span class="sensitive-data">10.8.0.x</span>)
+ ← Accès via tunnel VPN SSL →
+          </pre>
+        </div>
+      </div>
+
+      <!-- Section B: Plan d'adressage -->
+      <div class="guide-section" id="adressage">
+        <div class="guide-section-header">
+          <div class="guide-section-badge">🌐</div>
+          <div>
+            <div class="guide-section-title">B. Plan d'adressage IP complet</div>
+            <div class="guide-section-subtitle">Inventaire réseau de l'infrastructure Nextcloud</div>
+          </div>
+        </div>
+
+        <h3>B.1 — Équipements réseau</h3>
         <table>
           <tr>
-            <th>Composant</th>
-            <th>IP / Rôle</th>
-            <th>Service(s)</th>
+            <th>Catégorie</th>
+            <th>Nom</th>
+            <th>Adresse IP</th>
+            <th>Masque</th>
+            <th>Passerelle</th>
+            <th>Rôle</th>
           </tr>
           <tr>
-            <td>Serveur Nextcloud</td>
-            <td>192.168.1.10</td>
-            <td>Apache2, PHP 8.2, MariaDB, Nextcloud</td>
+            <td rowspan="2">Firewall</td>
+            <td>Stormshield IN</td>
+            <td><span class="sensitive-data">192.168.10.1</span></td>
+            <td>255.255.255.0</td>
+            <td>FAI</td>
+            <td>Sécurité périmétrique</td>
           </tr>
           <tr>
-            <td>NAS Sauvegardes</td>
-            <td>192.168.1.20</td>
-            <td>rsync, partage SMB/NFS</td>
+            <td>Stormshield OUT</td>
+            <td><span class="sensitive-data">192.168.30.122</span></td>
+            <td>255.255.255.0</td>
+            <td>FAI</td>
+            <td>Sécurité périmétrique</td>
           </tr>
           <tr>
-            <td>Firewall</td>
-            <td>192.168.1.1 (gateway)</td>
-            <td>NAT, PAT, VPN, filtrage</td>
+            <td>Virtualisation</td>
+            <td>Proxmox</td>
+            <td><span class="sensitive-data">192.168.120.12</span></td>
+            <td>255.255.255.0</td>
+            <td><span class="sensitive-data">192.168.120.1</span></td>
+            <td>Environnement virtuel</td>
           </tr>
           <tr>
-            <td>Switch managé</td>
-            <td>192.168.1.254</td>
-            <td>VLAN 10 (serveurs), segmentation</td>
+            <td rowspan="2">Serveur</td>
+            <td>nc-server-01</td>
+            <td><span class="sensitive-data">192.168.120.10</span></td>
+            <td>255.255.255.0</td>
+            <td><span class="sensitive-data">192.168.120.1</span></td>
+            <td>Nextcloud + Nginx + MariaDB + Redis</td>
+          </tr>
+          <tr>
+            <td>nc-server-01 (NAT)</td>
+            <td><span class="sensitive-data">192.168.30.122</span></td>
+            <td>255.255.255.0</td>
+            <td><span class="sensitive-data">192.168.30.253</span></td>
+            <td>Accès externe</td>
+          </tr>
+          <tr>
+            <td>NAS</td>
+            <td>nas-wiconnect</td>
+            <td><span class="sensitive-data">192.168.110.X</span></td>
+            <td>255.255.255.0</td>
+            <td><span class="sensitive-data">192.168.110.1</span></td>
+            <td>Sauvegardes</td>
+          </tr>
+          <tr>
+            <td>Poste Admin</td>
+            <td>admin-pc</td>
+            <td><span class="sensitive-data">192.168.30.140</span></td>
+            <td>255.255.255.0</td>
+            <td><span class="sensitive-data">192.168.30.253</span></td>
+            <td>Administration</td>
+          </tr>
+          <tr>
+            <td>Switch</td>
+            <td>SW-nextcloud</td>
+            <td><span class="sensitive-data">192.168.100.2</span></td>
+            <td>255.255.255.0</td>
+            <td><span class="sensitive-data">192.168.100.1</span></td>
+            <td>Commutation réseau</td>
+          </tr>
+        </table>
+
+        <h3>B.2 — Accès en NAT</h3>
+        <table>
+          <tr>
+            <th>Équipement</th>
+            <th>Adresse IP</th>
+            <th>Port NAT</th>
+          </tr>
+          <tr>
+            <td>Firewall OUT</td>
+            <td><span class="sensitive-data">192.168.30.122</span></td>
+            <td>4443 → 8007</td>
+          </tr>
+          <tr>
+            <td>Proxmox</td>
+            <td><span class="sensitive-data">192.168.30.122</span></td>
+            <td>8006</td>
+          </tr>
+        </table>
+
+        <h3>B.3 — Services réseau</h3>
+        <table>
+          <tr>
+            <th>Service</th>
+            <th>Protocole</th>
+            <th>Port</th>
+            <th>Adresse</th>
+            <th>Accessible depuis</th>
+          </tr>
+          <tr>
+            <td>Nextcloud Web</td>
+            <td>HTTPS</td>
+            <td>8007</td>
+            <td><span class="sensitive-data">192.168.120.10</span></td>
+            <td>Internet + VPN</td>
+          </tr>
+          <tr>
+            <td>Nextcloud HTTP</td>
+            <td>HTTP</td>
+            <td>80</td>
+            <td><span class="sensitive-data">192.168.120.10</span></td>
+            <td>Internet (→ redirige vers HTTPS)</td>
+          </tr>
+          <tr>
+            <td>SSH Admin</td>
+            <td>SSH</td>
+            <td>2222</td>
+            <td><span class="sensitive-data">192.168.120.10</span></td>
+            <td>LAN + VPN uniquement</td>
+          </tr>
+          <tr>
+            <td>MariaDB</td>
+            <td>TCP</td>
+            <td>3306</td>
+            <td>127.0.0.1 (localhost)</td>
+            <td>Serveur local uniquement</td>
+          </tr>
+          <tr>
+            <td>Redis</td>
+            <td>TCP</td>
+            <td>6379</td>
+            <td>127.0.0.1 (localhost)</td>
+            <td>Serveur local uniquement</td>
+          </tr>
+          <tr>
+            <td>WireGuard VPN</td>
+            <td>UDP+TCP</td>
+            <td>51820</td>
+            <td><span class="sensitive-data">IP_WAN_STORMSHIELD</span></td>
+            <td>Internet</td>
+          </tr>
+          <tr>
+            <td>NAS SMB</td>
+            <td>SMB</td>
+            <td>445</td>
+            <td><span class="sensitive-data">192.168.110.10</span></td>
+            <td>LAN uniquement</td>
           </tr>
         </table>
       </div>
 
-      <!-- PREREQS -->
-      <div class="step-section" id="prereqs">
-        <div class="step-header">
-          <div class="step-badge">✅</div>
+      <!-- Section C: Identifiants -->
+      <div class="guide-section" id="identifiants">
+        <div class="guide-section-header">
+          <div class="guide-section-badge">🔑</div>
           <div>
-            <div class="step-title">Prérequis avant installation</div>
-            <div class="step-subtitle">Vérifier ces points avant de commencer</div>
+            <div class="guide-section-title">C. Identifiants et mots de passe</div>
+            <div class="guide-section-subtitle">Informations d'authentification pour l'infrastructure</div>
           </div>
         </div>
 
-        <div class="checklist">
-          <div class="check-item">
-            <div class="check-icon ok">✓</div>
-            <div>Serveur Ubuntu 22.04 LTS installé — accès root ou sudo disponible</div>
+        <div class="info-box box-warn">
+          <strong>⚠️ Sécurité :</strong> Ces identifiants doivent être stockés de manière sécurisée (ex: coffre-fort KeePass, Bitwarden).
+          <strong>Ne jamais les partager en clair</strong> (email, chat, etc.).
+          <strong>Les valeurs ci-dessous sont des placeholders.</strong>
+        </div>
+
+        <h3>C.1 — Équipements réseau</h3>
+        <table>
+          <tr>
+            <th>Équipement</th>
+            <th>Nom</th>
+            <th>Utilisateur</th>
+            <th>Mot de passe</th>
+            <th>Rôle</th>
+          </tr>
+          <tr>
+            <td>Firewall</td>
+            <td>Stormshield</td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td>Sécurité périmétrique</td>
+          </tr>
+          <tr>
+            <td>Virtualisation</td>
+            <td>Proxmox</td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td>Création de machines virtuelles</td>
+          </tr>
+          <tr>
+            <td>Switch</td>
+            <td>SW-nextcloud</td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td>Commutation réseau</td>
+          </tr>
+        </table>
+
+        <h3>C.2 — Serveur Nextcloud</h3>
+        <table>
+          <tr>
+            <th>Service</th>
+            <th>Utilisateur</th>
+            <th>Mot de passe</th>
+            <th>Rôle</th>
+          </tr>
+          <tr>
+            <td>Nextcloud (Admin)</td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td>Administration Nextcloud</td>
+          </tr>
+          <tr>
+            <td>MariaDB (Root)</td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td>Accès root à la base de données</td>
+          </tr>
+          <tr>
+            <td>MariaDB (User)</td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td>Utilisateur dédié Nextcloud</td>
+          </tr>
+        </table>
+
+        <h3>C.3 — NAS Synology</h3>
+        <table>
+          <tr>
+            <th>Service</th>
+            <th>Utilisateur</th>
+            <th>Mot de passe</th>
+            <th>Rôle</th>
+          </tr>
+          <tr>
+            <td>NAS Synology</td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+            <td>Administration du NAS</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Section D: Installation Docker -->
+      <div class="guide-section" id="installation">
+        <div class="guide-section-header">
+          <div class="guide-section-badge">🐳</div>
+          <div>
+            <div class="guide-section-title">D. Installation avec Docker</div>
+            <div class="guide-section-subtitle">Déploiement de Nextcloud en conteneurs</div>
           </div>
-          <div class="check-item">
-            <div class="check-icon ok">✓</div>
-            <div>Connectivité réseau fonctionnelle, IP statique configurée (<code>192.168.1.10</code>)</div>
+        </div>
+
+        <div class="info-box box-info">
+          <strong>ℹ️ Prérequis :</strong>
+          <ul style="margin-top: 8px; padding-left: 20px;">
+            <li>Serveur sous Linux (Ubuntu/Debian recommandé)</li>
+            <li>Docker et Docker Compose installés</li>
+            <li>Accès root ou sudo</li>
+            <li>Ports 8007 et 51820 disponibles</li>
+          </ul>
+        </div>
+
+        <h3>D.1 — Nettoyage initial (si nécessaire)</h3>
+        <p>Si une installation précédente existe, commencez par tout supprimer :</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Nettoyage complet</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
           </div>
-          <div class="check-item">
-            <div class="check-icon ok">✓</div>
-            <div>NAS accessible sur le réseau (<code>192.168.1.20</code>) avec un dossier partagé dédié aux sauvegardes</div>
+          <pre><span class="c-comment"># Arrêter et supprimer les conteneurs existants</span>
+<span class="c-cmd">docker stop</span> nextcloud-nginx nextcloud-app nextcloud-db
+<span class="c-cmd">docker rm</span> nextcloud-nginx nextcloud-app nextcloud-db
+
+<span class="c-comment"># Nettoyer les images et volumes inutilisés</span>
+<span class="c-cmd">docker system prune</span> <span class="c-flag">-af</span>
+
+<span class="c-comment"># Supprimer les fichiers de configuration</span>
+<span class="c-cmd">sudo rm</span> <span class="c-flag">-rf</span> /opt/nextcloud</pre>
+        </div>
+
+        <h3>D.2 — Création de l'arborescence</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Créer les dossiers</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
           </div>
-          <div class="check-item">
-            <div class="check-icon ok">✓</div>
-            <div>FQDN défini localement dans le DNS ou dans <code>/etc/hosts</code> (ex: <code>cloud.mondomaine.lan</code>)</div>
+          <pre><span class="c-cmd">sudo mkdir</span> <span class="c-flag">-p</span> /opt/nextcloud/{app,data,db,nginx,ssl}</pre>
+        </div>
+
+        <h3>D.3 — Génération du certificat SSL auto-signé</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Générer le certificat</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
           </div>
-          <div class="check-item">
-            <div class="check-icon warn">⚠</div>
-            <div>Minimum <strong>2 Go de RAM</strong>, 20 Go de disque libre recommandés pour Nextcloud</div>
+          <pre><span class="c-cmd">openssl req</span> <span class="c-flag">-x509 -nodes -days 365</span> \
+  <span class="c-flag">-newkey rsa:2048</span> \
+  <span class="c-flag">-keyout</span> /opt/nextcloud/ssl/nextcloud.key \
+  <span class="c-flag">-out</span> /opt/nextcloud/ssl/nextcloud.crt \
+  <span class="c-flag">-subj</span> <span class="c-string">"/CN=nextcloud"</span></pre>
+        </div>
+
+        <h3>D.4 — Fichier docker-compose.yml</h3>
+        <p>Créez le fichier de configuration Docker Compose :</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Créer le fichier</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
           </div>
-          <div class="check-item">
-            <div class="check-icon warn">⚠</div>
-            <div>Le certificat SSL auto-signé déclenchera un avertissement dans le navigateur — normal en environnement interne</div>
+          <pre><span class="c-cmd">sudo nano</span> /opt/nextcloud/docker-compose.yml</pre>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>/opt/nextcloud/docker-compose.yml</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
           </div>
+          <pre><span class="c-section">version:</span> <span class="c-string">'3.8'</span>
+
+<span class="c-section">services:</span>
+
+  <span class="c-comment"># Base de données MariaDB</span>
+  <span class="c-section">db:</span>
+    <span class="c-section">image:</span> mariadb:10.6
+    <span class="c-section">container_name:</span> nextcloud-db
+    <span class="c-section">restart:</span> always
+    <span class="c-section">environment:</span>
+      <span class="c-var">MYSQL_ROOT_PASSWORD:</span> <span class="sensitive-data">XXXXXX</span>
+      <span class="c-var">MYSQL_DATABASE:</span> nextcloud
+      <span class="c-var">MYSQL_USER:</span> nextcloud
+      <span class="c-var">MYSQL_PASSWORD:</span> <span class="sensitive-data">XXXXXX</span>
+    <span class="c-section">volumes:</span>
+      <span class="c-flag">-</span> /opt/nextcloud/db:/var/lib/mysql
+
+  <span class="c-comment"># Application Nextcloud</span>
+  <span class="c-section">nextcloud:</span>
+    <span class="c-section">image:</span> nextcloud:28-fpm
+    <span class="c-section">container_name:</span> nextcloud-app
+    <span class="c-section">restart:</span> always
+    <span class="c-section">environment:</span>
+      <span class="c-var">MYSQL_HOST:</span> db
+      <span class="c-var">MYSQL_DATABASE:</span> nextcloud
+      <span class="c-var">MYSQL_USER:</span> nextcloud
+      <span class="c-var">MYSQL_PASSWORD:</span> <span class="sensitive-data">XXXXXX</span>
+    <span class="c-section">volumes:</span>
+      <span class="c-flag">-</span> /opt/nextcloud/app:/var/www/html
+      <span class="c-flag">-</span> /opt/nextcloud/data:/var/www/html/data
+    <span class="c-section">depends_on:</span>
+      <span class="c-flag">-</span> db
+
+  <span class="c-comment"># Serveur Web Nginx</span>
+  <span class="c-section">nginx:</span>
+    <span class="c-section">image:</span> nginx:latest
+    <span class="c-section">container_name:</span> nextcloud-nginx
+    <span class="c-section">restart:</span> always
+    <span class="c-section">ports:</span>
+      <span class="c-flag">-</span> <span class="c-string">"8007:8007"</span>
+    <span class="c-section">volumes:</span>
+      <span class="c-flag">-</span> /opt/nextcloud/nginx/nextcloud.conf:/etc/nginx/conf.d/default.conf
+      <span class="c-flag">-</span> /opt/nextcloud/ssl:/etc/nginx/ssl
+      <span class="c-flag">-</span> /opt/nextcloud/app:/var/www/html
+    <span class="c-section">depends_on:</span>
+      <span class="c-flag">-</span> nextcloud</pre>
+        </div>
+
+        <div class="info-box box-info">
+          <strong>ℹ️ Note :</strong> Remplacez <span class="sensitive-data">XXXXXX</span> par vos mots de passe réels dans un environnement sécurisé.
+        </div>
+
+        <h3>D.5 — Configuration Nginx</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Créer le fichier de config Nginx</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">sudo nano</span> /opt/nextcloud/nginx/nextcloud.conf</pre>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>/opt/nextcloud/nginx/nextcloud.conf</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-section">server {</span>
+    <span class="c-section">listen</span> 8007 ssl;
+    <span class="c-section">server_name</span> _;
+
+    <span class="c-comment"># Certificat SSL</span>
+    <span class="c-section">ssl_certificate</span> /etc/nginx/ssl/nextcloud.crt;
+    <span class="c-section">ssl_certificate_key</span> /etc/nginx/ssl/nextcloud.key;
+
+    <span class="c-comment"># Racine du site</span>
+    <span class="c-section">root</span> /var/www/html;
+    <span class="c-section">index</span> index.php;
+
+    <span class="c-comment"># Taille max des fichiers</span>
+    <span class="c-section">client_max_body_size</span> 2048M;
+
+    <span class="c-comment"># Gestion des URLs</span>
+    <span class="c-section">location</span> / {
+        <span class="c-section">try_files</span> $uri $uri/ /index.php?$args;
+    }
+
+    <span class="c-comment"># Gestion de PHP</span>
+    <span class="c-section">location</span> ~ \.php$ {
+        <span class="c-section">fastcgi_pass</span> nextcloud-app:9000;
+        <span class="c-section">include</span> fastcgi_params;
+        <span class="c-section">fastcgi_param</span> SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+<span class="c-section">}</span></pre>
+        </div>
+
+        <h3>D.6 — Lancement des conteneurs</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Démarrer Nextcloud</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">cd</span> /opt/nextcloud
+<span class="c-cmd">docker compose up</span> <span class="c-flag">-d</span></pre>
+        </div>
+
+        <div class="info-box box-success">
+          <strong>✅ Accès à Nextcloud :</strong> <code>https://<span class="sensitive-data">IP_DU_SERVEUR</span>:8007</code>
+        </div>
+
+        <h3>D.7 — Vérification de l'installation</h3>
+        <p>Vérifiez que vous utilisez la bonne image Nextcloud :</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Vérifier la configuration PHP</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">docker exec</span> <span class="c-flag">-it</span> nextcloud-app ls /usr/local/etc/php-fpm.d/</pre>
+        </div>
+
+        <p>Vous devriez voir :</p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>Résultat attendu</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre>www.conf
+zz-docker.conf</pre>
         </div>
       </div>
 
-      <!-- STEP 1 à STEP 10 : Contenu inchangé (seul le thème a été adapté) -->
-      <!-- Je ne répète pas tout le contenu pour éviter de surcharger la réponse, mais il est identique à votre guide original, avec les couleurs adaptées. -->
+      <!-- Section E: VPN WireGuard -->
+      <div class="guide-section" id="vpn">
+        <div class="guide-section-header">
+          <div class="guide-section-badge">🔒</div>
+          <div>
+            <div class="guide-section-title">E. Configuration VPN WireGuard</div>
+            <div class="guide-section-subtitle">Connexion sécurisée entre Nextcloud et le NAS</div>
+          </div>
+        </div>
 
+        <h3>E.1 — Installation de WireGuard</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Installer WireGuard</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">sudo apt update</span>
+<span class="c-cmd">sudo apt install</span> wireguard <span class="c-flag">-y</span></pre>
+        </div>
+
+        <h3>E.2 — Génération des clés</h3>
+        <p><strong>Sur le serveur Nextcloud :</strong></p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Générer les clés pour Nextcloud</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">wg genkey</span> | <span class="c-cmd">sudo tee</span> /etc/wireguard/privatekey | <span class="c-cmd">wg pubkey</span> | <span class="c-cmd">sudo tee</span> /etc/wireguard/publickey</pre>
+        </div>
+
+        <p>Afficher les clés générées :</p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Afficher les clés</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-comment"># Clé privée Nextcloud (À PROTÉGER)</span>
+<span class="c-cmd">sudo cat</span> /etc/wireguard/privatekey
+
+<span class="c-comment"># Clé publique Nextcloud</span>
+<span class="c-cmd">sudo cat</span> /etc/wireguard/publickey</pre>
+        </div>
+
+        <div class="info-box box-warn">
+          <strong>⚠️ Attention :</strong> Les clés privées doivent être stockées de manière sécurisée. Ne les partagez jamais en clair.
+        </div>
+
+        <p><strong>Sur le NAS Synology :</strong></p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Générer les clés pour le NAS</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">wg genkey</span> | <span class="c-cmd">tee</span> nas_privatekey | <span class="c-cmd">wg pubkey</span> > nas_publickey</pre>
+        </div>
+
+        <h3>E.3 — Configuration WireGuard sur Nextcloud</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Configurer WireGuard</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">sudo nano</span> /etc/wireguard/wg0.conf</pre>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>/etc/wireguard/wg0.conf</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-section">[Interface]</span>
+<span class="c-var">Address</span> = 10.10.10.1/24
+<span class="c-var">PrivateKey</span> = <span class="sensitive-data">CLÉ_PRIVÉE_NEXTCLOUD</span>
+<span class="c-var">ListenPort</span> = 51820
+
+<span class="c-section">[Peer]</span>
+<span class="c-var">PublicKey</span> = <span class="sensitive-data">CLÉ_PUBLIQUE_NAS</span>
+<span class="c-var">AllowedIPs</span> = 10.10.10.2/32</pre>
+        </div>
+
+        <p>Activer WireGuard :</p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Activer le VPN</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">sudo wg-quick up</span> wg0
+<span class="c-cmd">sudo systemctl enable</span> wg-quick@wg0</pre>
+        </div>
+
+        <h3>E.4 — Configuration WireGuard sur le NAS</h3>
+        <p>Sur le NAS Synology, créez un fichier de configuration WireGuard avec :</p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>Configuration NAS</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-section">[Interface]</span>
+<span class="c-var">Address</span> = 10.10.10.2/24
+<span class="c-var">PrivateKey</span> = <span class="sensitive-data">CLÉ_PRIVÉE_NAS</span>
+
+<span class="c-section">[Peer]</span>
+<span class="c-var">PublicKey</span> = <span class="sensitive-data">CLÉ_PUBLIQUE_NEXTCLOUD</span>
+<span class="c-var">Endpoint</span> = <span class="sensitive-data">IP_PUBLIC_NEXTCLOUD</span>:51820
+<span class="c-var">AllowedIPs</span> = 10.10.10.1/32
+<span class="c-var">PersistentKeepalive</span> = 25</pre>
+        </div>
+
+        <div class="info-box box-info">
+          <strong>ℹ️ Note :</strong> Remplacez <span class="sensitive-data">CLÉ_PRIVÉE_NEXTCLOUD</span>, <span class="sensitive-data">CLÉ_PUBLIQUE_NAS</span>, etc. par vos valeurs réelles dans un environnement sécurisé.
+        </div>
+
+        <h3>E.5 — Test de la connexion VPN</h3>
+        <p><strong>Depuis Nextcloud :</strong></p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Tester la connexion vers le NAS</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">ping</span> 10.10.10.2</pre>
+        </div>
+
+        <p><strong>Depuis le NAS :</strong></p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Tester la connexion vers Nextcloud</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">ping</span> 10.10.10.1</pre>
+        </div>
+      </div>
+
+      <!-- Section F: Configuration NAS -->
+      <div class="guide-section" id="nas">
+        <div class="guide-section-header">
+          <div class="guide-section-badge">💾</div>
+          <div>
+            <div class="guide-section-title">F. Configuration du NAS Synology</div>
+            <div class="guide-section-subtitle">Intégration avec Nextcloud via WebDAV</div>
+          </div>
+        </div>
+
+        <h3>F.1 — Activer WebDAV sur le NAS</h3>
+        <p>Depuis l'interface DSM du NAS :</p>
+        <div class="checklist">
+          <div class="check-item">
+            <div class="check-icon ok">✓</div>
+            <div>Aller dans <strong>Panneau de configuration → Services de fichiers</strong></div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon ok">✓</div>
+            <div>Activer <strong>WebDAV</strong></div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon ok">✓</div>
+            <div>Activer <strong>HTTPS</strong> (port 5006 par défaut)</div>
+          </div>
+        </div>
+
+        <h3>F.2 — Connecter Nextcloud au NAS</h3>
+        <p>Dans Nextcloud :</p>
+        <div class="checklist">
+          <div class="check-item">
+            <div class="check-icon ok">1</div>
+            <div>Aller dans <strong>Administration → Stockage externe</strong></div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon ok">2</div>
+            <div>Ajouter un nouveau stockage externe</div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon ok">3</div>
+            <div>Sélectionner <strong>WebDAV</strong> comme type de stockage</div>
+          </div>
+        </div>
+
+        <p>Renseigner les informations suivantes :</p>
+        <table>
+          <tr>
+            <th>Champ</th>
+            <th>Valeur</th>
+          </tr>
+          <tr>
+            <td>URL</td>
+            <td><code>https://10.10.10.2:5006/volume1/Nextcloud</code></td>
+          </tr>
+          <tr>
+            <td>Utilisateur</td>
+            <td><span class="sensitive-data">UTILISATEUR_NAS</span></td>
+          </tr>
+          <tr>
+            <td>Mot de passe</td>
+            <td><span class="sensitive-data">XXXXXX</span></td>
+          </tr>
+          <tr>
+            <td>Options</td>
+            <td>✅ HTTPS<br>✅ Certificat auto-signé</td>
+          </tr>
+        </table>
+
+        <div class="info-box box-success">
+          <strong>✅ Validation :</strong> Vous devriez voir un point vert si la connexion est réussie.
+        </div>
+      </div>
+
+      <!-- Section G: Firewall UFW -->
+      <div class="guide-section" id="firewall">
+        <div class="guide-section-header">
+          <div class="guide-section-badge">🛡️</div>
+          <div>
+            <div class="guide-section-title">G. Configuration du Firewall UFW</div>
+            <div class="guide-section-subtitle">Sécurisation du serveur Nextcloud</div>
+          </div>
+        </div>
+
+        <h3>G.1 — Installation de UFW</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Installer UFW</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">sudo apt update</span>
+<span class="c-cmd">sudo apt install</span> ufw <span class="c-flag">-y</span></pre>
+        </div>
+
+        <h3>G.2 — Configuration des règles</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Autoriser les ports nécessaires</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-comment"># Autoriser SSH (port 2222)</span>
+<span class="c-cmd">sudo ufw allow</span> 2222/tcp
+
+<span class="c-comment"># Autoriser Nextcloud (port 8007)</span>
+<span class="c-cmd">sudo ufw allow</span> 8007/tcp
+
+<span class="c-comment"># Autoriser WireGuard (port 51820)</span>
+<span class="c-cmd">sudo ufw allow</span> 51820/udp</pre>
+        </div>
+
+        <h3>G.3 — Activation de UFW</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Activer le firewall</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">sudo ufw enable</span>
+
+<span class="c-comment"># Vérifier les règles</span>
+<span class="c-cmd">sudo ufw status</span></pre>
+        </div>
+      </div>
+
+      <!-- Section H: Maintenance -->
+      <div class="guide-section" id="maintenance">
+        <div class="guide-section-header">
+          <div class="guide-section-badge">🔧</div>
+          <div>
+            <div class="guide-section-title">H. Commandes de maintenance</div>
+            <div class="guide-section-subtitle">Gestion et optimisation de Nextcloud</div>
+          </div>
+        </div>
+
+        <h3>H.1 — Mise à jour des conteneurs</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Mettre à jour Nextcloud</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">cd</span> /opt/nextcloud
+<span class="c-cmd">docker compose pull</span>
+<span class="c-cmd">docker compose up</span> <span class="c-flag">-d</span></pre>
+        </div>
+
+        <h3>H.2 — Réparation de Nextcloud</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Réparer l'installation</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">docker exec</span> <span class="c-flag">-u www-data</span> nextcloud-app php occ maintenance:repair</pre>
+        </div>
+
+        <h3>H.3 — Ajout des index manquants</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Optimiser la base de données</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">docker exec</span> <span class="c-flag">-u www-data</span> nextcloud-app php occ db:add-missing-indices</pre>
+        </div>
+
+        <h3>H.4 — Exécution du cron</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-label"><span class="dot"></span>bash — Lancer les tâches planifiées</div>
+            <button class="code-copy" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre><span class="c-cmd">docker exec</span> <span class="c-flag">-u www-data</span> nextcloud-app php cron.php</pre>
+        </div>
+
+        <h3>H.5 — Sauvegardes NAS (HyperBackup)</h3>
+        <p>Configurer une tâche de sauvegarde dans <strong>HyperBackup</strong> sur le NAS Synology :</p>
+        <div class="checklist">
+          <div class="check-item">
+            <div class="check-icon ok">✓</div>
+            <div>Dossiers à sauvegarder : <code>/opt/nextcloud/app</code>, <code>/opt/nextcloud/data</code>, <code>/opt/nextcloud/db</code></div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon ok">✓</div>
+            <div>Planification : <strong>Quotidienne</strong></div>
+          </div>
+          <div class="check-item">
+            <div class="check-icon ok">✓</div>
+            <div>Rétention : <strong>30 jours</strong></div>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 
   <script>
-    // Copy code button
     function copyCode(btn) {
       const pre = btn.closest('.code-block').querySelector('pre');
       const text = pre.innerText || pre.textContent;
@@ -779,8 +1437,7 @@
       });
     }
 
-    // Active sidebar link on scroll
-    const sections = document.querySelectorAll('[id]');
+    const sections = document.querySelectorAll('.guide-section[id]');
     const links = document.querySelectorAll('.sidebar-link');
 
     const observer = new IntersectionObserver(entries => {
@@ -791,7 +1448,7 @@
           if (active) active.classList.add('active');
         }
       });
-    }, { rootMargin: '-60px 0px -70% 0px' });
+    }, { rootMargin: '-100px 0px -50% 0px' });
 
     sections.forEach(s => observer.observe(s));
   </script>
