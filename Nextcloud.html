@@ -552,9 +552,6 @@
         <a href="#installation" class="sidebar-link">
           <span class="step-num">🐳</span> Installation Docker
         </a>
-        <a href="#configuration" class="sidebar-link">
-          <span class="step-num">⚙️</span> Configuration
-        </a>
         <a href="#vpn" class="sidebar-link">
           <span class="step-num">🔒</span> VPN WireGuard
         </a>
@@ -1002,64 +999,6 @@ INTERNET
           <strong>⚠️ Important :</strong> Notez bien le nom d'utilisateur et le mot de passe administrateur. Ils seront nécessaires pour accéder à Nextcloud.
         </div>
       </div>
-
-      <!-- Configuration -->
-      <div class="guide-section" id="configuration">
-        <div class="guide-section-header">
-          <div class="guide-section-badge">⚙️</div>
-          <div>
-            <div class="guide-section-title">Configuration avancée</div>
-            <div class="guide-section-subtitle">Optimisation et personnalisation</div>
-          </div>
-        </div>
-
-        <h3>1. Configuration de base</h3>
-        <p>Une fois l'installation terminée, connectez-vous à Nextcloud et effectuez les configurations suivantes :</p>
-        <div class="checklist">
-          <div class="check-item">
-            <div class="check-icon ok">✓</div>
-            <div>Allez dans <strong>Paramètres → Administration</strong></div>
-          </div>
-          <div class="check-item">
-            <div class="check-icon ok">✓</div>
-            <div>Vérifiez que le <strong>mode maintenance</strong> est désactivé</div>
-          </div>
-          <div class="check-item">
-            <div class="check-icon ok">✓</div>
-            <div>Configurez l'<strong>email du serveur</strong> pour les notifications</div>
-          </div>
-          <div class="check-item">
-            <div class="check-icon ok">✓</div>
-            <div>Activez les <strong>applications recommandées</strong> (OnlyOffice, Talk, etc.)</div>
-          </div>
-        </div>
-
-        <h3>2. Configuration des domaines de confiance</h3>
-        <p>Pour éviter les erreurs de sécurité, ajoutez votre domaine ou IP à la liste des domaines de confiance :</p>
-        <div class="code-block">
-          <div class="code-header">
-            <div class="code-label"><span class="dot"></span>bash — Ajouter un domaine de confiance</div>
-            <button class="code-copy" onclick="copyCode(this)">Copier</button>
-          </div>
-          <pre><span class="c-cmd">docker exec</span> <span class="c-flag">-u www-data</span> nextcloud-app php occ config:system:set trusted_domains 1 <span class="c-flag">--value</span>=<span class="sensitive-data">"VOTRE_IP_OU_DOMAINE"</span></pre>
-        </div>
-
-        <h3>3. Configuration du cron</h3>
-        <p>Pour que les tâches planifiées (comme la suppression des fichiers temporaires) fonctionnent correctement :</p>
-        <div class="code-block">
-          <div class="code-header">
-            <div class="code-label"><span class="dot"></span>bash — Configurer le cron</div>
-            <button class="code-copy" onclick="copyCode(this)">Copier</button>
-          </div>
-          <pre><span class="c-cmd">docker exec</span> <span class="c-flag">-u www-data</span> nextcloud-app php occ background:cron</pre>
-        </div>
-
-        <div class="info-box box-info">
-          <strong>ℹ️ Note :</strong> Vous pouvez aussi configurer une tâche cron sur l'hôte pour exécuter cette commande toutes les 5 minutes :
-          <pre style="margin-top: 8px; padding: 10px; background: var(--bg1); border-radius: 5px; overflow-x: auto;">*/5 * * * * docker exec -u www-data nextcloud-app php cron.php</pre>
-        </div>
-      </div>
-
       <!-- VPN WireGuard -->
       <div class="guide-section" id="vpn">
         <div class="guide-section-header">
